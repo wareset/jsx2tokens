@@ -1,0 +1,50 @@
+{
+  "name": "jsx2tokens",
+  "version": "0.0.1",
+  "description": "Tokenizer for js, ts, jsx, tsx",
+  "keywords": [
+    "json",
+    "minify",
+    "circular",
+    "compress"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/wareset/jsx2tokens#readme",
+  "bugs": {
+    "url": "https://github.com/wareset/jsx2tokens/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wareset/jsx2tokens.git"
+  },
+  "author": "rease <cftcview@gmail.com>",
+  "main": "index",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "files": [
+    "README.md",
+    "index.d.ts",
+    "index.js",
+    "index.mjs",
+    "types"
+  ],
+  "scripts": {
+    "dester": "dester ./src ./ --babel -t types",
+    "build": "npm run -s dester -- -s -r -m",
+    "dev": "npm run -s dester -- -w --no-r -m",
+    "pkg:name": "cat package.json | grep '\"name\":' | cut -d '\"' -f4",
+    "pkg:version": "cat package.json | grep '\"version\":' | cut -d '\"' -f4",
+    "git:get:tag": "echo $(npm run -s pkg:name)@$(npm run -s pkg:version)",
+    "git:set:tag": "t=$(npm run -s git:get:tag) && git tag -a $t -m $t",
+    "git:commit": "npm run -s build && git add . && read -p 'Commit: ' c; c=${c:-v$(npm run -s pkg:version)} && n=$(npm run -s pkg:name) && git commit -m \"$n: $c\"",
+    "commit": "read -p 'Version [patch]: ' V; V=${V:-patch} && npm version --force --no-git-tag-version $V; echo $V && read -p 'Push? (y/N): ' G && read -p 'Publish? (y/N): ' P && npm run -s git:commit && case $G in Y|y) $(git push);; esac && case $P in Y|y) $(npm run -s git:set:tag && git push --tags && npm -s publish);; esac"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/plugin-transform-block-scoping": "^7.16.0",
+    "@babel/plugin-transform-template-literals": "^7.16.0",
+    "dester": "0.x",
+    "typescript": "4.x"
+  }
+}

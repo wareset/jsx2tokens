@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    [
+      "@babel/plugin-transform-template-literals",
+      {
+        "loose": true
+      }
+    ],
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": true
+      }
+    ],
+    [
+      "@babel/plugin-transform-block-scoping",
+      {
+        "loose": true
+      }
+    ]
+  ]
+}
