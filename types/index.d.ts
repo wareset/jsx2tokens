@@ -15,7 +15,7 @@ export declare type TypeToken = {
     range?: TypeRange;
     loc?: TypeSourceLocation;
 };
-export declare const TYPES: {
+declare const TYPES: {
     readonly BOOLEAN: "Boolean";
     readonly IDENTIFIER: "Identifier";
     readonly KEYWORD: "Keyword";
@@ -42,6 +42,7 @@ export declare const TYPES: {
     readonly JSX_TEXT: "JSXText";
     readonly JSX_COMMENT: "JSXComment";
 };
+export { TYPES as TOKEN_TYPES };
 export declare const CHILDLESS_TAGS: {
     area: boolean;
     base: boolean;

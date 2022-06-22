@@ -57,12 +57,12 @@ console.log(tokens)
 ## Types of tokens:
 
 ```js
-import { TYPES } from 'jsx2tokens'
+import { TOKEN_TYPES } from 'jsx2tokens'
 // or 
 // const { TYPES } = require('jsx2tokens')
 
-console.log(TYPES)
-// TYPES equal to:
+console.log(TOKEN_TYPES)
+// TOKEN_TYPES equal to:
 {
   // Base
   BOOLEAN                     : 'Boolean', // true, false
@@ -419,7 +419,7 @@ console.log(CHILDLESS_TAGS)
 Simple example:
 
 ```js
-import { jsx2tokens, TYPES } from 'jsx2tokens'
+import { jsx2tokens, TOKEN_TYPES } from 'jsx2tokens'
 
 const code = ' some code '
 
@@ -427,8 +427,8 @@ const ctx = { spacesCount: 0 }
 
 const tokens = jsx2tokens(code, {
   proxyCtx: ctx,
-  proxy   : (v, k, tokens, proxyCtx) => {
-    if (v.type === TYPES.SPACE) {
+  proxy   : (token, _k, tokens, proxyCtx) => {
+    if (token.type === TOKEN_TYPES.SPACE) {
       proxyCtx.spacesCount++
       tokens.pop()
     }

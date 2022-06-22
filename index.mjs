@@ -3,7 +3,7 @@
 dester builds:
 index.ts
 */
-var e, a, s, c, r, t, i, n, E, k, d, l, o, S, p, b, u, _, T, f, N, x, L, R, O = {
+var e, a, s, c, r, t, i, n, E, k, d, l, o, S, p, b, _, u, T, N, f, x, L, R, O = {
     BOOLEAN: "Boolean",
     IDENTIFIER: "Identifier",
     KEYWORD: "Keyword",
@@ -276,7 +276,7 @@ E = (e, a) => {
         }
         E(e, O.STRING), i(e);
     }
-}, u = e => {
+}, _ = e => {
     if (k(e)) {
         var a = 0, s = !1;
         e: for (;;) switch (a && a--, e.idx++, r(e, 0)) {
@@ -316,7 +316,7 @@ E = (e, a) => {
         "`" === l ? "`" !== o && (d.type = O.TEMPLATE_HEAD) : d.type = "`" !== o ? O.TEMPLATE_MIDDLE : O.TEMPLATE_TAIL, 
         i(e);
     }
-}, _ = e => {
+}, u = e => {
     if (k(e)) {
         var a = 0, s = 0;
         e: for (;;) switch (s && s--, e.idx++, r(e, 0)) {
@@ -398,7 +398,7 @@ E = (e, a) => {
         }
         E(e, O.NUMERIC), i(e);
     }
-}, f = e => {
+}, N = e => {
     if (k(e)) {
         var a, s = 1;
         e.idx++;
@@ -418,7 +418,7 @@ E = (e, a) => {
         }
         E(e, O.NUMERIC), i(e);
     }
-}, N = e => {
+}, f = e => {
     if (k(e)) {
         var a, s = 1;
         e.idx++;
@@ -547,7 +547,7 @@ E = (e, a) => {
         E(e, O.JSX_COMMENT), i(e), e.tokenLast = a;
     }
 }, (i, {loc: E = !1, range: l = !1, strict: C = !0, useJSX: I = !0, insideJSX: A = !1, skipStyleTags: X = !1, skipScriptTags: M = !1, parseScriptTags: m = !1, considerChildlessTags: v = !1, proxyCtx: h = {}, proxy: J = s} = {}) => {
-    var D = I && A ? "%><%" : "", y = {
+    var D = I && A ? "%><%" : "", P = {
         source: i,
         isBreakLoop: !1,
         proxy: J,
@@ -632,19 +632,19 @@ E = (e, a) => {
             break;
 
           case "`":
-            n(s, "%``%"), u(s);
+            n(s, "%``%"), _(s);
             break;
 
           case "0":
             switch (r(s, 1)) {
               case "b":
               case "B":
-                f(s);
+                N(s);
                 break;
 
               case "o":
               case "O":
-                N(s);
+                f(s);
                 break;
 
               case "x":
@@ -705,7 +705,7 @@ E = (e, a) => {
           case "}":
             switch (s.ENV) {
               case "%``%":
-                s.deep--, u(s);
+                s.deep--, _(s);
                 break;
 
               case "%{}%":
@@ -821,7 +821,7 @@ E = (e, a) => {
                 break;
 
               default:
-                "<" === s.ENV[1] && ">" === E ? (s.deep--, n(s, null), d(s, 1, "/" !== s.ENV[2] ? O.JSX_TAG_OPENER_END_CHILDLESS : O.JSX_TAG_CLOSER_END)) : e(s.tokenLast) ? _(s) : d(s, "=" === E ? 1 : 0);
+                "<" === s.ENV[1] && ">" === E ? (s.deep--, n(s, null), d(s, 1, "/" !== s.ENV[2] ? O.JSX_TAG_OPENER_END_CHILDLESS : O.JSX_TAG_CLOSER_END)) : e(s.tokenLast) ? u(s) : d(s, "=" === E ? 1 : 0);
             }
             break;
 
@@ -829,7 +829,7 @@ E = (e, a) => {
             o(s);
         }
         k(s);
-    })(y), C && y.deep && c(y, "deep"), y.tokens;
+    })(P), C && P.deep && c(P, "deep"), P.tokens;
 });
 
-export { g as CHILDLESS_TAGS, O as TYPES, C as jsx2tokens };
+export { g as CHILDLESS_TAGS, O as TOKEN_TYPES, C as jsx2tokens };

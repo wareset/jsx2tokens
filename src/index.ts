@@ -30,7 +30,7 @@ declare type TypeJscTokenizeCallback =
 TYPES
 --------------------------------------------------------------------------------
 */
-export const TYPES = {
+const TYPES = {
   // Base
   BOOLEAN                     : 'Boolean', // true, false
   IDENTIFIER                  : 'Identifier', // a, b, app...
@@ -63,6 +63,8 @@ export const TYPES = {
   JSX_TEXT                    : 'JSXText',
   JSX_COMMENT                 : 'JSXComment', // <!--...-->
 } as const
+
+export { TYPES as TOKEN_TYPES }
 
 /*
 CHILDLESS_TAGS

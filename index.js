@@ -836,4 +836,4 @@ E = (e, a) => {
     })(P), C && P.deep && c(P, "deep"), P.tokens;
 });
 
-exports.CHILDLESS_TAGS = g, exports.TYPES = O, exports.jsx2tokens = C;
+exports.CHILDLESS_TAGS = g, exports.TOKEN_TYPES = O, exports.jsx2tokens = C;
