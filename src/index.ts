@@ -13,43 +13,44 @@ export declare type TypeSourceLocation = {
   end: TypeSourcePosition
 }
 
-export declare type TypeTokenType =
-  typeof TOKEN_BOOLEAN |
-  typeof TOKEN_IDENTIFIER |
-  typeof TOKEN_KEYWORD |
-  typeof TOKEN_NULL |
-  typeof TOKEN_NUMERIC |
-  typeof TOKEN_PUCNTUATOR |
-  typeof TOKEN_REGULAR_EXPRESSION |
-  typeof TOKEN_STRING |
+// export declare type TypeTokenType =
+//   typeof TYPES.BOOLEAN |
+//   typeof TYPES.IDENTIFIER |
+//   typeof TYPES.KEYWORD |
+//   typeof TYPES.NULL |
+//   typeof TYPES.NUMERIC |
+//   typeof TYPES.PUCNTUATOR |
+//   typeof TYPES.REGULAR_EXPRESSION |
+//   typeof TYPES.STRING |
 
-  typeof TOKEN_TEMPLATE |
-  typeof TOKEN_TEMPLATE_HEAD |
-  typeof TOKEN_TEMPLATE_MIDDLE |
-  typeof TOKEN_TEMPLATE_TAIL |
+//   typeof TYPES.TEMPLATE |
+//   typeof TYPES.TEMPLATE_HEAD |
+//   typeof TYPES.TEMPLATE_MIDDLE |
+//   typeof TYPES.TEMPLATE_TAIL |
   
-  typeof TOKEN_COMMENT_BLOCK |
-  typeof TOKEN_COMMENT_LINE |
+//   typeof TYPES.COMMENT_BLOCK |
+//   typeof TYPES.COMMENT_LINE |
   
-  typeof TOKEN_SPACE |
-  typeof TOKEN_MODIFIER |
+//   typeof TYPES.SPACE |
+//   typeof TYPES.MODIFIER |
 
-  typeof TOKEN_JSX_TAG_OPENER_START |
-  typeof TOKEN_JSX_TAG_OPENER_END |
-  // typeof TOKEN_JSX_TAG_OPENER_END_CHILDLESS |
-  typeof TOKEN_JSX_TAG_CLOSER_START |
-  typeof TOKEN_JSX_TAG_CLOSER_END |
-  typeof TOKEN_JSX_EXPRESSION_START |
-  typeof TOKEN_JSX_EXPRESSION_END |
-  typeof TOKEN_JSX_TEXT |
-  typeof TOKEN_JSX_COMMENT
+//   typeof TYPES.JSX_TAG_OPENER_START |
+//   typeof TYPES.JSX_TAG_OPENER_END |
+//   typeof TYPES.JSX_TAG_OPENER_END_CHILDLESS |
+//   typeof TYPES.JSX_TAG_CLOSER_START |
+//   typeof TYPES.JSX_TAG_CLOSER_END |
+//   typeof TYPES.JSX_EXPRESSION_START |
+//   typeof TYPES.JSX_EXPRESSION_END |
+//   typeof TYPES.JSX_TEXT |
+//   typeof TYPES.JSX_COMMENT
+export declare type TypeTokenType = typeof TYPES[keyof typeof TYPES]
 
 export declare type TypeToken = {
   deep: number
   type: TypeTokenType
   value: string
-  range: TypeRange
-  loc: TypeSourceLocation
+  range?: TypeRange
+  loc?: TypeSourceLocation
 }
 
 declare type TypeJscTokenizeCallback =
@@ -59,52 +60,88 @@ declare type TypeJscTokenizeCallback =
 Tokens
 --------------------------------------------------------------------------------
 */
-export const TOKEN_BOOLEAN = 'Boolean'
-export const TOKEN_IDENTIFIER = 'Identifier'
-export const TOKEN_KEYWORD = 'Keyword'
-export const TOKEN_NULL = 'Null'
-export const TOKEN_NUMERIC = 'Numeric'
-export const TOKEN_PUCNTUATOR = 'Punctuator'
-export const TOKEN_REGULAR_EXPRESSION = 'RegularExpression'
-export const TOKEN_STRING = 'String'
+// export const TYPES.BOOLEAN = 'Boolean'
+// export const TYPES.IDENTIFIER = 'Identifier'
+// export const TYPES.KEYWORD = 'Keyword'
+// export const TYPES.NULL = 'Null'
+// export const TYPES.NUMERIC = 'Numeric'
+// export const TYPES.PUCNTUATOR = 'Punctuator'
+// export const TYPES.REGULAR_EXPRESSION = 'RegularExpression'
+// export const TYPES.STRING = 'String'
 
-export const TOKEN_TEMPLATE = 'Template'
-export const TOKEN_TEMPLATE_HEAD = 'TemplateHead'
-export const TOKEN_TEMPLATE_MIDDLE = 'TemplateMiddle'
-export const TOKEN_TEMPLATE_TAIL = 'TemplateTail'
+// export const TYPES.TEMPLATE = 'Template'
+// export const TYPES.TEMPLATE_HEAD = 'TemplateHead'
+// export const TYPES.TEMPLATE_MIDDLE = 'TemplateMiddle'
+// export const TYPES.TEMPLATE_TAIL = 'TemplateTail'
 
-export const TOKEN_COMMENT_BLOCK = 'CommentBlock'
-export const TOKEN_COMMENT_LINE = 'CommentLine'
+// export const TYPES.COMMENT_BLOCK = 'CommentBlock'
+// export const TYPES.COMMENT_LINE = 'CommentLine'
 
-export const TOKEN_SPACE = 'Space'
-export const TOKEN_MODIFIER = 'Modifier'
+// export const TYPES.SPACE = 'Space'
+// export const TYPES.MODIFIER = 'Modifier'
 
-export const TOKEN_JSX_TAG_OPENER_START = 'JSXTagOpenerStart'
-export const TOKEN_JSX_TAG_OPENER_END = 'JSXTagOpenerEnd'
-// export const TOKEN_JSX_TAG_OPENER_END_CHILDLESS = 'JSXTagOpenerEndChildless'
-export const TOKEN_JSX_TAG_CLOSER_START = 'JSXTagCloserStart'
-export const TOKEN_JSX_TAG_CLOSER_END = 'JSXTagCloserEnd'
-export const TOKEN_JSX_EXPRESSION_START = 'JSXExpressionStart'
-export const TOKEN_JSX_EXPRESSION_END = 'JSXExpressionEnd'
-export const TOKEN_JSX_TEXT = 'JSXText'
-export const TOKEN_JSX_COMMENT = 'JSXComment'
+// export const TYPES.JSX_TAG_OPENER_START = 'JSXTagOpenerStart'
+// export const TYPES.JSX_TAG_OPENER_END = 'JSXTagOpenerEnd'
+// export const TYPES.JSX_TAG_OPENER_END_CHILDLESS = 'JSXTagOpenerEndChildless'
+// export const TYPES.JSX_TAG_CLOSER_START = 'JSXTagCloserStart'
+// export const TYPES.JSX_TAG_CLOSER_END = 'JSXTagCloserEnd'
+// export const TYPES.JSX_EXPRESSION_START = 'JSXExpressionStart'
+// export const TYPES.JSX_EXPRESSION_END = 'JSXExpressionEnd'
+// export const TYPES.JSX_TEXT = 'JSXText'
+// export const TYPES.JSX_COMMENT = 'JSXComment'
+
+export const TYPES = {
+  // Base
+  BOOLEAN                     : 'Boolean', // true, false
+  IDENTIFIER                  : 'Identifier', // a, b, app...
+  KEYWORD                     : 'Keyword', // let, for, return...
+  NULL                        : 'Null', // null
+  NUMERIC                     : 'Numeric', // 1_000, 0.6e-5, 0x1...
+  PUCNTUATOR                  : 'Punctuator', // +-=!&...
+  REGULAR_EXPRESSION          : 'RegularExpression', // /\s+/
+  STRING                      : 'String', // 'single', "double"
+  TEMPLATE                    : 'Template', // `...`
+  TEMPLATE_HEAD               : 'TemplateHead', // `...{
+  TEMPLATE_MIDDLE             : 'TemplateMiddle', // }...{
+  TEMPLATE_TAIL               : 'TemplateTail', // }...`
+  // Comments
+  COMMENT_BLOCK               : 'CommentBlock', // /*...*/
+  COMMENT_LINE                : 'CommentLine', // //...
+  // Separators (' ', '\n', '\t', ' \n\r\n', etc.)
+  SPACE                       : 'Space',
+  // Modifier "@" - does not exist in the standard jsx
+  MODIFIER                    : 'Modifier', // @onclick
+  // JSX
+  JSX_TAG_OPENER_START        : 'JSXTagOpenerStart', // <
+  JSX_TAG_OPENER_END          : 'JSXTagOpenerEnd', // >
+  JSX_TAG_OPENER_END_CHILDLESS: 'JSXTagOpenerEndChildless', // />, >*
+  // * - for <img>, <meta>... If enable 'considerChildlessTags'
+  JSX_TAG_CLOSER_START        : 'JSXTagCloserStart', // </
+  JSX_TAG_CLOSER_END          : 'JSXTagCloserEnd', // >
+  JSX_EXPRESSION_START        : 'JSXExpressionStart', // {
+  JSX_EXPRESSION_END          : 'JSXExpressionEnd', // }
+  JSX_TEXT                    : 'JSXText',
+  JSX_COMMENT                 : 'JSXComment', // <!--...-->
+} as const
 
 export const CHILDLESS_TAGS = {
-  img   : true,
-  area  : true,
-  base  : true,
-  br    : true,
-  col   : true,
-  embed : true,
-  hr    : true,
-  input : true,
-  link  : true,
-  meta  : true,
-  param : true,
-  source: true,
-  track : true,
-  wbr   : true
-} as const
+  area   : true,
+  base   : true,
+  br     : true,
+  col    : true,
+  command: true,
+  embed  : true,
+  hr     : true,
+  img    : true,
+  input  : true,
+  keygen : true,
+  link   : true,
+  meta   : true,
+  param  : true,
+  source : true,
+  track  : true,
+  wbr    : true
+}
 
 /*
 jsx2tokens
@@ -112,23 +149,21 @@ jsx2tokens
 */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const jsx2tokens = (() => {
-  // const isChildlessTagName = (s: string): boolean =>
-  //   /^(?:img|area|base|br|col|embed|hr|input|link|meta|param|source|track|wbr)$/.test(s)
   const isChildlessTagName = (s: string): boolean => (CHILDLESS_TAGS as any)[s] === true
   
   const isMaybeRegexp = (token: TypeToken | null): boolean =>
     !token ||
-  token.type === TOKEN_KEYWORD ||
-  token.type === TOKEN_MODIFIER ||
-  token.type === TOKEN_JSX_EXPRESSION_START ||
-  token.type === TOKEN_PUCNTUATOR && '!.})]'.indexOf(token.value) < 0
+  token.type === TYPES.KEYWORD ||
+  token.type === TYPES.MODIFIER ||
+  token.type === TYPES.JSX_EXPRESSION_START ||
+  token.type === TYPES.PUCNTUATOR && '!.})]'.indexOf(token.value) < 0
 
   const isMaybeTag = (token: TypeToken | null): boolean =>
     !token ||
-  token.type === TOKEN_KEYWORD ||
-  token.type === TOKEN_MODIFIER ||
-  token.type === TOKEN_JSX_EXPRESSION_START ||
-  token.type === TOKEN_PUCNTUATOR && /[^!.})\]]$/.test(token.value)
+  token.type === TYPES.KEYWORD ||
+  token.type === TYPES.MODIFIER ||
+  token.type === TYPES.JSX_EXPRESSION_START ||
+  token.type === TYPES.PUCNTUATOR && /[^!.})\]]$/.test(token.value)
 
   const isTSGeneric = (s: string, idx: number): boolean => {
     for (let q = false, q2 = false, i = idx + 1; i < s.length; i++) {
@@ -151,11 +186,14 @@ export const jsx2tokens = (() => {
     readonly source: string
     isBreakLoop: boolean
     readonly proxy: TypeJscTokenizeCallback
+    readonly proxyCtx: any
+    readonly loc: boolean
+    readonly range: boolean
     readonly useJSX: boolean
-    readonly parseStyleTags: boolean
+    readonly skipStyleTags: boolean
+    readonly skipScriptTags: boolean
     readonly parseScriptTags: boolean
     readonly considerChildlessTags: boolean
-    readonly cbCtx: object
     readonly tokens: TypeToken[]
     tokenLast: TypeToken | null
     tagNameLast: string
@@ -181,7 +219,7 @@ export const jsx2tokens = (() => {
   }
 
   const runCallback = (iam: TypeIam): void => {
-    iam.isBreakLoop = !!iam.proxy(iam.tokenLast!, iam.tokens.length - 1, iam.tokens, iam.cbCtx)
+    iam.isBreakLoop = !!iam.proxy(iam.tokenLast!, iam.tokens.length - 1, iam.tokens, iam.proxyCtx)
   }
 
   // ---------------------------------------------------------------------------
@@ -201,12 +239,21 @@ export const jsx2tokens = (() => {
       deep : iam.deep,
       type : _type,
       value: iam.source.slice(iam.rangeStart, iam.idx + 1),
-      range: [iam.rangeStart, iam.rangeStart = iam.idx + 1],
-      loc  : {
-        start: { line: iam.lineStart, column: iam.columnStart },
-        end  : { line: iam.line, column: iam.columnStart = iam.idx - iam.columnDiff + 1 }
-      }
+      // range: [iam.rangeStart, iam.rangeStart = iam.idx + 1],
+      // loc  : {
+      //   start: { line: iam.lineStart, column: iam.columnStart },
+      //   end  : { line: iam.line, column: iam.columnStart = iam.idx - iam.columnDiff + 1 }
+      // }
     }
+
+    const range = [iam.rangeStart, iam.rangeStart = iam.idx + 1]
+    const loc = {
+      start: { line: iam.lineStart, column: iam.columnStart },
+      end  : { line: iam.line, column: iam.columnStart = iam.idx - iam.columnDiff + 1 }
+    }
+
+    if (iam.loc) iam.tokenLast.loc = loc as any
+    if (iam.range) iam.tokenLast.range = range as any
 
     iam.tokens.push(iam.tokenLast)
   }
@@ -215,7 +262,7 @@ export const jsx2tokens = (() => {
     if (iam.rangeStart < iam.idx) {
       iam.idx--
       const tokenLastTmp = iam.tokenLast
-      saveToken(iam, TOKEN_SPACE)
+      saveToken(iam, TYPES.SPACE)
       if (tokenLastTmp && tokenLastTmp.deep > iam.tokenLast!.deep) {
         iam.tokenLast!.deep = tokenLastTmp.deep
       }
@@ -229,16 +276,23 @@ export const jsx2tokens = (() => {
     return !iam.isBreakLoop
   }
 
-  const createPunctuator = (iam: TypeIam, offset: number, type: TypeTokenType = TOKEN_PUCNTUATOR): void => {
+  const createPunctuator = (iam: TypeIam, offset: number, type: TypeTokenType = TYPES.PUCNTUATOR): void => {
     if (initToken(iam)) {
     // const tokenLastTmp = tokenLast
       if (offset) iam.idx += offset
+      tagNameLast(iam)
       saveToken(iam, type)
 
       // if (tokenLastTmp && /^[:]$/.test(tokenLast!.value)) {
-      //   if (tokenLastTmp.type === TOKEN_KEYWORD) tokenLastTmp.type = TOKEN_IDENTIFIER
+      //   if (tokenLastTmp.type === TYPES.KEYWORD) tokenLastTmp.type = TYPES.IDENTIFIER
       // }
       runCallback(iam)
+    }
+  }
+
+  const tagNameLast = (iam: TypeIam): void => {
+    if (iam.tokenLast && iam.tokenLast.type === TYPES.JSX_TAG_OPENER_START) {
+      iam.tagNameLast = iam.source.slice(iam.rangeStart, iam.idx + 1)
     }
   }
 
@@ -246,7 +300,7 @@ export const jsx2tokens = (() => {
 
   const CASE_IDENTIFIER = (iam: TypeIam): void => {
     if (initToken(iam)) {
-    // let char0 = ''
+    // let ch0 = ''
   
       LOOP: for (;;) {
         iam.idx++
@@ -314,22 +368,24 @@ export const jsx2tokens = (() => {
         }
       }
 
+      tagNameLast(iam)
       const tokenLastTmp = iam.tokenLast
-      saveToken(iam, TOKEN_IDENTIFIER)
+      saveToken(iam, TYPES.IDENTIFIER)
       const token = iam.tokenLast!
 
-      if (tokenLastTmp && tokenLastTmp.type === TOKEN_JSX_TAG_OPENER_START) {
-        iam.tagNameLast = token.value
-      }
+      // if (tokenLastTmp && tokenLastTmp.type === TYPES.JSX_TAG_OPENER_START) {
+      //   console.log(tokenLastTmp)
+      //   iam.tagNameLast = token.value
+      // }
 
       if (!tokenLastTmp || !/^[.]$/.test(tokenLastTmp.value)) {
         switch (token.value) {
           case 'null':
-            token.type = TOKEN_NULL
+            token.type = TYPES.NULL
             break
           case 'true':
           case 'false':
-            token.type = TOKEN_BOOLEAN
+            token.type = TYPES.BOOLEAN
             break
           case 'let':
           case 'static':
@@ -376,7 +432,7 @@ export const jsx2tokens = (() => {
           case 'while':
           case 'with':
           case 'yield':
-            token.type = TOKEN_KEYWORD
+            token.type = TYPES.KEYWORD
             break
           default:
 
@@ -384,7 +440,7 @@ export const jsx2tokens = (() => {
       }
 
       if (token.value.indexOf('@') > -1) {
-        token.type = TOKEN_MODIFIER
+        token.type = TYPES.MODIFIER
       }
       runCallback(iam)
     }
@@ -392,7 +448,7 @@ export const jsx2tokens = (() => {
 
   const CASE_COMMENT_LINE = (iam: TypeIam): void => {
     if (initToken(iam)) {
-    // let char0: string
+    // let ch0: string
   
       iam.idx++
       LOOP: for (;;) {
@@ -410,7 +466,7 @@ export const jsx2tokens = (() => {
       }
   
       const tokenLastTmp = iam.tokenLast
-      saveToken(iam, TOKEN_COMMENT_LINE)
+      saveToken(iam, TYPES.COMMENT_LINE)
       runCallback(iam)
       iam.tokenLast = tokenLastTmp
     }
@@ -418,14 +474,14 @@ export const jsx2tokens = (() => {
   
   const CASE_COMMENT_BLOCK = (iam: TypeIam): void => {
     if (initToken(iam)) {
-    // let char0: string
+    // let ch0: string
   
       iam.idx++
       LOOP: for (;;) {
         iam.idx++
         switch (char(iam, 0)) {
           case '':
-            ERROR(iam, TOKEN_COMMENT_BLOCK)
+            ERROR(iam, TYPES.COMMENT_BLOCK)
             break
           case '\u000D'/* \r */:
             plusLine(iam, false)
@@ -446,7 +502,7 @@ export const jsx2tokens = (() => {
       }
   
       const tokenLastTmp = iam.tokenLast
-      saveToken(iam, TOKEN_COMMENT_BLOCK)
+      saveToken(iam, TYPES.COMMENT_BLOCK)
       runCallback(iam)
       iam.tokenLast = tokenLastTmp
     }
@@ -454,38 +510,38 @@ export const jsx2tokens = (() => {
   
   const CASE_STRING = (iam: TypeIam): void => {
     if (initToken(iam)) {
-      let char0: string
+      let ch0: string
       let slashed = 0
   
       LOOP: for (;;) {
         if (slashed) slashed--
         iam.idx++
-        switch (char0 = char(iam, 0)) {
+        switch (ch0 = char(iam, 0)) {
           case '':
           // case '\u000D' /* \r */:
           // case '\u000A' /* \n */:
           // case '\u2028':
           // case '\u2029':
-            ERROR(iam, TOKEN_STRING)
+            ERROR(iam, TYPES.STRING)
             break
           case '\\':
             if (!slashed) slashed = 2
             break
           case '"':
           case "'":
-            if (!slashed && char0 === iam.source[iam.rangeStart]) break LOOP
+            if (!slashed && ch0 === iam.source[iam.rangeStart]) break LOOP
             break
           default:
         }
       }
-      saveToken(iam, TOKEN_STRING)
+      saveToken(iam, TYPES.STRING)
       runCallback(iam)
     }
   }
   
   const CASE_TEMPLATE = (iam: TypeIam): void => {
     if (initToken(iam)) {
-    // let char0: string
+    // let ch0: string
       let slashed = 0
       let needDeepPlus = false
 
@@ -494,7 +550,7 @@ export const jsx2tokens = (() => {
         iam.idx++
         switch (char(iam, 0)) {
           case '':
-            ERROR(iam, TOKEN_TEMPLATE)
+            ERROR(iam, TYPES.TEMPLATE)
             break
           case '\u000D'/* \r */:
             plusLine(iam, false)
@@ -523,16 +579,16 @@ export const jsx2tokens = (() => {
           default:
         }
       }
-      saveToken(iam, TOKEN_TEMPLATE)
+      saveToken(iam, TYPES.TEMPLATE)
       if (needDeepPlus) iam.deep++
 
       const token = iam.tokenLast!
       const first = token.value[0]
       const last = token.value[token.value.length - 1]
       if (first === '`') {
-        if (last !== '`') token.type = TOKEN_TEMPLATE_HEAD
+        if (last !== '`') token.type = TYPES.TEMPLATE_HEAD
       } else {
-        token.type = last !== '`' ? TOKEN_TEMPLATE_MIDDLE : TOKEN_TEMPLATE_TAIL
+        token.type = last !== '`' ? TYPES.TEMPLATE_MIDDLE : TYPES.TEMPLATE_TAIL
       }
       runCallback(iam)
     }
@@ -541,7 +597,7 @@ export const jsx2tokens = (() => {
   const CASE_REGULAR_EXPRESSION = (iam: TypeIam): void => {
     if (initToken(iam)) {
       let rxD = 0
-      // let char0: string
+      // let ch0: string
       let slashed = 0
   
       LOOP: for (;;) {
@@ -553,7 +609,7 @@ export const jsx2tokens = (() => {
           case '\u000A'/* \n */:
           case '\u2028':
           case '\u2029':
-            ERROR(iam, TOKEN_REGULAR_EXPRESSION)
+            ERROR(iam, TYPES.REGULAR_EXPRESSION)
             break
           case '\\':
             if (!slashed) slashed = 2
@@ -578,7 +634,7 @@ export const jsx2tokens = (() => {
           default:
         }
       }
-      saveToken(iam, TOKEN_REGULAR_EXPRESSION)
+      saveToken(iam, TYPES.REGULAR_EXPRESSION)
       runCallback(iam)
     }
   }
@@ -586,18 +642,18 @@ export const jsx2tokens = (() => {
   const CASE_NUMERIC = (iam: TypeIam, nD: number, nE: number): void => {
     if (initToken(iam)) {
       let nS = nD || nE || 0
-      let char0: string
+      let ch0: string
   
       iam.idx += nS
       LOOP: for (;;) {
         iam.idx++
-        switch (char0 = char(iam, 0)) {
+        switch (ch0 = char(iam, 0)) {
           case '_':
-            if (nS) ERROR(iam, TOKEN_NUMERIC)
+            if (nS) ERROR(iam, TYPES.NUMERIC)
             nS = 1
             break
           case '.':
-            if (nS) ERROR(iam, TOKEN_NUMERIC)
+            if (nS) ERROR(iam, TYPES.NUMERIC)
             if (nD) {
               iam.idx--
               break LOOP
@@ -607,14 +663,14 @@ export const jsx2tokens = (() => {
             break
           case 'e':
           case 'E':
-            if (nE) ERROR(iam, TOKEN_NUMERIC)
+            if (nE) ERROR(iam, TYPES.NUMERIC)
             nE = 1
             nS = 1
             break
           case '+':
           case '-':
             if (nE !== 1) {
-              if (nS) ERROR(iam, TOKEN_NUMERIC)
+              if (nS) ERROR(iam, TYPES.NUMERIC)
               iam.idx--
               break LOOP
             }
@@ -634,12 +690,12 @@ export const jsx2tokens = (() => {
             nS = 0
             break
           default:
-            if (char0 !== 'n') iam.idx--
-            else if (nS) ERROR(iam, TOKEN_NUMERIC)
+            if (ch0 !== 'n') iam.idx--
+            else if (nS) ERROR(iam, TYPES.NUMERIC)
             break LOOP
         }
       }
-      saveToken(iam, TOKEN_NUMERIC)
+      saveToken(iam, TYPES.NUMERIC)
       runCallback(iam)
     }
   }
@@ -647,14 +703,14 @@ export const jsx2tokens = (() => {
   const CASE_NUMERIC_B = (iam: TypeIam): void => {
     if (initToken(iam)) {
       let nS = 1
-      let char0: string
+      let ch0: string
 
       iam.idx++
       LOOP: for (;;) {
         iam.idx++
-        switch (char0 = char(iam, 0)) {
+        switch (ch0 = char(iam, 0)) {
           case '_':
-            if (nS) ERROR(iam, TOKEN_NUMERIC)
+            if (nS) ERROR(iam, TYPES.NUMERIC)
             nS = 1
             break
           case '0':
@@ -662,12 +718,12 @@ export const jsx2tokens = (() => {
             nS = 0
             break
           default:
-            if (char0 !== 'n') iam.idx--
-            else if (nS) ERROR(iam, TOKEN_NUMERIC)
+            if (ch0 !== 'n') iam.idx--
+            else if (nS) ERROR(iam, TYPES.NUMERIC)
             break LOOP
         }
       }
-      saveToken(iam, TOKEN_NUMERIC)
+      saveToken(iam, TYPES.NUMERIC)
       runCallback(iam)
     }
   }
@@ -675,14 +731,14 @@ export const jsx2tokens = (() => {
   const CASE_NUMERIC_O = (iam: TypeIam): void => {
     if (initToken(iam)) {
       let nS = 1
-      let char0: string
+      let ch0: string
  
       iam.idx++
       LOOP: for (;;) {
         iam.idx++
-        switch (char0 = char(iam, 0)) {
+        switch (ch0 = char(iam, 0)) {
           case '_':
-            if (nS) ERROR(iam, TOKEN_NUMERIC)
+            if (nS) ERROR(iam, TYPES.NUMERIC)
             nS = 1
             break
           case '0':
@@ -696,12 +752,12 @@ export const jsx2tokens = (() => {
             nS = 0
             break
           default:
-            if (char0 !== 'n') iam.idx--
-            else if (nS) ERROR(iam, TOKEN_NUMERIC)
+            if (ch0 !== 'n') iam.idx--
+            else if (nS) ERROR(iam, TYPES.NUMERIC)
             break LOOP
         }
       }
-      saveToken(iam, TOKEN_NUMERIC)
+      saveToken(iam, TYPES.NUMERIC)
       runCallback(iam)
     }
   }
@@ -709,14 +765,14 @@ export const jsx2tokens = (() => {
   const CASE_NUMERIC_X = (iam: TypeIam): void => {
     if (initToken(iam)) {
       let nS = 1
-      let char0: string
+      let ch0: string
    
       iam.idx++
       LOOP: for (;;) {
         iam.idx++
-        switch (char0 = char(iam, 0)) {
+        switch (ch0 = char(iam, 0)) {
           case '_':
-            if (nS) ERROR(iam, TOKEN_NUMERIC)
+            if (nS) ERROR(iam, TYPES.NUMERIC)
             nS = 1
             break
           case '0':
@@ -744,24 +800,26 @@ export const jsx2tokens = (() => {
             nS = 0
             break
           default:
-            if (char0 !== 'n') iam.idx--
-            else if (nS) ERROR(iam, TOKEN_NUMERIC)
+            if (ch0 !== 'n') iam.idx--
+            else if (nS) ERROR(iam, TYPES.NUMERIC)
             break LOOP
         }
       }
-      saveToken(iam, TOKEN_NUMERIC)
+      saveToken(iam, TYPES.NUMERIC)
       runCallback(iam)
     }
   }
   
-  const CASE_JSX_TEXT = (iam: TypeIam): void => {
+  const CASE_JSX_TEXT = (iam: TypeIam, forIdx?: number): void => {
     if (initToken(iam)) {
-    // let char0: string
+    // let ch0: string
       let slashed = 0
   
       LOOP: for (;;) {
+        if (forIdx != null && iam.idx >= forIdx) break
         if (slashed) slashed--
         iam.idx++
+
         switch (char(iam, 0)) {
           case '':
             break LOOP
@@ -777,13 +835,13 @@ export const jsx2tokens = (() => {
             if (!slashed) slashed = 2
             break
           case '{':
-            if (!slashed) {
+            if (forIdx == null && !slashed) {
               iam.idx--
               break LOOP
             }
             break
           case '<':
-            if (char(iam, 1).trim()) {
+            if (forIdx == null && char(iam, 1).trim()) {
               iam.idx--
               break LOOP
             }
@@ -791,14 +849,14 @@ export const jsx2tokens = (() => {
           default:
         }
       }
-      saveToken(iam, TOKEN_JSX_TEXT)
+      saveToken(iam, TYPES.JSX_TEXT)
       runCallback(iam)
     }
   }
   
   const CASE_JSX_COMMENT = (iam: TypeIam): void => {
     if (initToken(iam)) {
-    // let char0: string
+    // let ch0: string
    
       iam.idx++
       LOOP: for (;;) {
@@ -825,29 +883,29 @@ export const jsx2tokens = (() => {
       }
   
       const tokenLastTmp = iam.tokenLast
-      saveToken(iam, TOKEN_JSX_COMMENT)
+      saveToken(iam, TYPES.JSX_COMMENT)
       runCallback(iam)
       iam.tokenLast = tokenLastTmp
     }
   }
 
   const DEFAULT_LOOP = (iam: TypeIam): void => {
-    let char0: string
-    let char1: string
-    let char2: string
+    let ch0: string
+    let ch1: string
+    let ch2: string
   
     LOOP: for (;!iam.isBreakLoop;) {
       iam.idx++
-      char0 = char(iam, 0)
+      ch0 = char(iam, 0)
   
       switch (iam.ENV) {
         case '%><%':
-          switch (char0) {
+          switch (ch0) {
             case '':
               break LOOP
             case '{':
               env(iam, '%jsxexp%')
-              createPunctuator(iam, 0, TOKEN_JSX_EXPRESSION_START)
+              createPunctuator(iam, 0, TYPES.JSX_EXPRESSION_START)
               iam.deep++
               break
             case '<':
@@ -860,7 +918,7 @@ export const jsx2tokens = (() => {
           }
           break
         default:
-          switch (char0) {
+          switch (ch0) {
             case '':
               break LOOP
             // Line Terminator Code Points
@@ -961,7 +1019,7 @@ export const jsx2tokens = (() => {
             // Punctuators
             // https://tc39.es/ecma262/#sec-punctuators
             case '.'/* . ... */:
-              switch (char1 = char(iam, 1)) {
+              switch (ch1 = char(iam, 1)) {
                 case '0':
                 case '1':
                 case '2':
@@ -975,7 +1033,7 @@ export const jsx2tokens = (() => {
                   CASE_NUMERIC(iam, 1, 0)
                   break
                 default:
-                  createPunctuator(iam, char1 === char0 && char(iam, 2) === char0 ? 2 : 0)
+                  createPunctuator(iam, ch1 === ch0 && char(iam, 2) === ch0 ? 2 : 0)
               }
               break
   
@@ -998,7 +1056,7 @@ export const jsx2tokens = (() => {
                 case '%jsxexp%':
                   iam.deep--
                   env(iam, null)
-                  createPunctuator(iam, 0, TOKEN_JSX_EXPRESSION_END)
+                  createPunctuator(iam, 0, TYPES.JSX_EXPRESSION_END)
                   break
                 default:
                   ERROR(iam, 'Bracket "}"')
@@ -1057,48 +1115,48 @@ export const jsx2tokens = (() => {
             case '+'/* + += ++ */:
             case '-'/* - -= -- */:
               createPunctuator(iam,
-                (char1 = char(iam, 1)) === '=' || char1 === char0 ? 1 : 0)
+                (ch1 = char(iam, 1)) === '=' || ch1 === ch0 ? 1 : 0)
               break
             case '?'/* ? ?. ?? ??= */:
               createPunctuator(iam,
-                (char1 = char(iam, 1)) === '.' ? 1 : char1 !== char0 ? 0 : char(iam, 2) !== '=' ? 1 : 2)
+                (ch1 = char(iam, 1)) === '.' ? 1 : ch1 !== ch0 ? 0 : char(iam, 2) !== '=' ? 1 : 2)
               break
             case '*'/* * *= ** **= */:
             case '&'/* & &= && &&= */:
             case '|'/* | |= || ||= */:
               createPunctuator(iam,
-                (char1 = char(iam, 1)) === '=' ? 1 : char1 !== char0 ? 0 : char(iam, 2) !== '=' ? 1 : 2)
+                (ch1 = char(iam, 1)) === '=' ? 1 : ch1 !== ch0 ? 0 : char(iam, 2) !== '=' ? 1 : 2)
               break
             case '='/* = => == === */:
               createPunctuator(iam,
-                (char1 = char(iam, 1)) === '>' ? 1 : char1 !== char0 ? 0 : char(iam, 2) !== char0 ? 1 : 2)
+                (ch1 = char(iam, 1)) === '>' ? 1 : ch1 !== ch0 ? 0 : char(iam, 2) !== ch0 ? 1 : 2)
               break
             case '<'/* < <= << <<= */:
-              char1 = char(iam, 1)
+              ch1 = char(iam, 1)
               if (
                 iam.useJSX && (
                   iam.ENV === '%jsxtag%' && ~env(iam, null) ||
-                char1 === '/' && iam.ENV[0] === '%script%' &&
+                ch1 === '/' && iam.ENV[0] === '%script%' &&
                   (char(iam, 2) === '>' || iam.source.slice(iam.idx + 2, iam.idx + 2 + iam.ENV[1].length) === iam.ENV[1]) ||
                 isMaybeTag(iam.tokenLast) && !isTSGeneric(iam.source, iam.idx))
               ) {
-                if (!char1.trim()) createPunctuator(iam, 0)
-                else if (char1 === '!' && char(iam, 2) === '-' && char(iam, 3) === '-') {
+                if (!ch1.trim()) createPunctuator(iam, 0)
+                else if (ch1 === '!' && char(iam, 2) === '-' && char(iam, 3) === '-') {
                   CASE_JSX_COMMENT(iam)
-                } else if (char1 === '/' && !/[/*]/.test(char(iam, 2))) {
+                } else if (ch1 === '/' && !/[/*]/.test(char(iam, 2))) {
                   if (iam.ENV === '%><%' || iam.ENV[0] === '%script%') env(iam, null), iam.deep--
-                  createPunctuator(iam, 1, TOKEN_JSX_TAG_CLOSER_START)
+                  createPunctuator(iam, 1, TYPES.JSX_TAG_CLOSER_START)
                   env(iam, '%</>%')
-                  // deep++
+                  iam.deep++
                 } else {
-                  createPunctuator(iam, 0, TOKEN_JSX_TAG_OPENER_START)
+                  createPunctuator(iam, 0, TYPES.JSX_TAG_OPENER_START)
                   iam.tagNameLast = ''
                   env(iam, '%<>%')
                   iam.deep++
                 }
               } else {
                 createPunctuator(iam,
-                  (char1 = char(iam, 1)) === '=' ? 1 : char1 !== char0 ? 0 : char(iam, 2) !== '=' ? 1 : 2)
+                  (ch1 = char(iam, 1)) === '=' ? 1 : ch1 !== ch0 ? 0 : char(iam, 2) !== '=' ? 1 : 2)
               }
               break
             case '>'/* > >= >> >>= >>> >>>= */:
@@ -1106,37 +1164,64 @@ export const jsx2tokens = (() => {
                 case '%<>%':
                   // deep--
                   env(iam, null)
-                  
-                  if (iam.parseScriptTags && iam.tagNameLast === 'script' ||
-                    iam.parseStyleTags && iam.tagNameLast === 'style') {
-                    createPunctuator(iam, 0, TOKEN_JSX_TAG_OPENER_END)
+
+                  if (iam.tagNameLast === 'script') {
+                    iam.deep--
+                    createPunctuator(iam, 0, TYPES.JSX_TAG_OPENER_END)
                     iam.deep++
-                    env(iam, ['%script%', iam.tagNameLast])
-                  } else if (
-                    !/^[!?%]/.test(iam.tagNameLast) && (!iam.considerChildlessTags || !isChildlessTagName(iam.tagNameLast))
-                  ) {
-                    createPunctuator(iam, 0, TOKEN_JSX_TAG_OPENER_END)
+                    if (iam.skipScriptTags) {
+                      env(iam, '%><%')
+                      const last = iam.source.indexOf('</script', iam.idx)
+                      if (last < 0) ERROR(iam, 'script')
+                      CASE_JSX_TEXT(iam, last - 1)
+                    } else if (iam.parseScriptTags) {
+                      env(iam, ['%script%', iam.tagNameLast])
+                    } else {
+                      env(iam, '%><%')
+                    }
+                    break
+                  }
+                  
+                  if (iam.tagNameLast === 'style') {
+                    iam.deep--
+                    createPunctuator(iam, 0, TYPES.JSX_TAG_OPENER_END)
                     iam.deep++
                     env(iam, '%><%')
+                    if (iam.skipStyleTags) {
+                      const last = iam.source.indexOf('</style', iam.idx)
+                      if (last < 0) ERROR(iam, 'style')
+                      CASE_JSX_TEXT(iam, last - 1)
+                    }
+                    break
+                  }
+
+                  if (
+                    /^[!?%]/.test(iam.tagNameLast) ||
+                    iam.considerChildlessTags && isChildlessTagName(iam.tagNameLast)
+                  ) {
+                    iam.deep--
+                    createPunctuator(iam, 0, TYPES.JSX_TAG_OPENER_END_CHILDLESS)
                   } else {
                     iam.deep--
-                    createPunctuator(iam, 0, TOKEN_JSX_TAG_OPENER_END)
+                    createPunctuator(iam, 0, TYPES.JSX_TAG_OPENER_END)
+                    iam.deep++
+                    env(iam, '%><%')
                   }
                   break
                 case '%</>%':
                   iam.deep--
                   env(iam, null)
-                  createPunctuator(iam, 0, TOKEN_JSX_TAG_CLOSER_END)
+                  createPunctuator(iam, 0, TYPES.JSX_TAG_CLOSER_END)
                   break
                 default:
                   createPunctuator(iam,
-                    (char1 = char(iam, 1)) === '=' ? 1 : char1 !== char0 ? 0
-                      : (char2 = char(iam, 2)) === '=' ? 2 : char2 !== char0 ? 1
+                    (ch1 = char(iam, 1)) === '=' ? 1 : ch1 !== ch0 ? 0
+                      : (ch2 = char(iam, 2)) === '=' ? 2 : ch2 !== ch0 ? 1
                         : char(iam, 3) !== '=' ? 2 : 3)
               }
               break
             case '/'/* /* // / /= */:
-              switch (char1 = char(iam, 1)) {
+              switch (ch1 = char(iam, 1)) {
                 // Comments
                 // https://tc39.es/ecma262/#sec-comments
                 // https://tc39.es/ecma262/#prod-SingleLineComment
@@ -1148,16 +1233,16 @@ export const jsx2tokens = (() => {
                   CASE_COMMENT_BLOCK(iam)
                   break
                 default:
-                  if (iam.ENV[1] === '<' && char1 === '>') {
+                  if (iam.ENV[1] === '<' && ch1 === '>') {
                     iam.deep--
                     env(iam, null)
                     createPunctuator(iam, 1, iam.ENV[2] !== '/'
-                      ? TOKEN_JSX_TAG_OPENER_END
-                      : TOKEN_JSX_TAG_CLOSER_END)
+                      ? TYPES.JSX_TAG_OPENER_END_CHILDLESS
+                      : TYPES.JSX_TAG_CLOSER_END)
                   } else if (isMaybeRegexp(iam.tokenLast)) {
                     CASE_REGULAR_EXPRESSION(iam)
                   } else {
-                    createPunctuator(iam, char1 === '=' ? 1 : 0)
+                    createPunctuator(iam, ch1 === '=' ? 1 : 0)
                   }
               }
               break
@@ -1168,24 +1253,40 @@ export const jsx2tokens = (() => {
           break
       }
     }
+
+    initToken(iam)
   }
   
   // ---------------------------------------------------------------------------
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  return <C extends readonly [] | {} | undefined = undefined>(
+  return <C extends readonly [] | {} = {}>(
     _source: string,
     // eslint-disable-next-line default-param-last
     {
+      /** Default: false. Source location */
+      loc = false,
+      /** Default: false. Source position */
+      range = false,
+      /** Default: true. Cause an error if the last "deep" is not equal to 0. */
       strict = true,
+      /** Default: true. Enable\disable search JSX (TSX). */
       useJSX = true,
+      /** Default: false. If "true", parsing will start as text JSX (TSX). */
       insideJSX = false,
-      parseStyleTags = false,
+      /** Default: false. If "true", the content inside the <style> will only be JSXText. */
+      skipStyleTags = false,
+      /** Default: false. If "true", the content inside the <script> will only be JSXText. */
+      skipScriptTags = false,
+      /** Default: false. If "true", the content inside the <script> will be tokenized. */
       parseScriptTags = false,
+      /** Default: false. If "true", the <img> and other childless tags will be like <img/>. */
       considerChildlessTags = false,
-      proxy = noopFalse as ((v: TypeToken, k: number, a: TypeToken[], ctx: C) => boolean | void)
-    } = {},
-    ctx?: C
+      /** Default: {}. Advanced context for proxy */
+      proxyCtx = {} as C,
+      /** Default: noop. Middleware like */
+      proxy = noopFalse as ((v: TypeToken, k: number, a: TypeToken[], proxyCtx: C) => boolean | void)
+    } = {}
   ) => {
     const ENV = useJSX && insideJSX ? '%><%' : ''
     const iam: TypeIam = {
@@ -1193,11 +1294,14 @@ export const jsx2tokens = (() => {
       isBreakLoop: false,
       // @ts-ignore
       proxy,
+      proxyCtx,
+      loc,
+      range,
       useJSX,
-      parseStyleTags,
+      skipStyleTags,
+      skipScriptTags,
       parseScriptTags,
       considerChildlessTags,
-      cbCtx      : ctx || {},
       tokens     : [],
       tokenLast  : null,
       tagNameLast: '',
@@ -1217,5 +1321,3 @@ export const jsx2tokens = (() => {
     return iam.tokens
   }
 })()
-
-// jsx2tokens('12', false, (v, k, a, c) => { console.log(v, k, a, c) }, [12, ''])

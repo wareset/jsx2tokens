@@ -1,12 +1,13 @@
 {
   "name": "jsx2tokens",
-  "version": "0.0.1",
-  "description": "Tokenizer for js, ts, jsx, tsx",
+  "version": "0.1.0",
+  "description": "Tokenizer for js, jsx, (ts, tsx)",
   "keywords": [
-    "json",
-    "minify",
-    "circular",
-    "compress"
+    "js",
+    "ts",
+    "jsx",
+    "tsx",
+    "tokenize"
   ],
   "license": "MIT",
   "homepage": "https://github.com/wareset/jsx2tokens#readme",
@@ -29,6 +30,7 @@
     "types"
   ],
   "scripts": {
+    "test": "jest --",
     "dester": "dester ./src ./ --babel -t types",
     "build": "npm run -s dester -- -s -r -m",
     "dev": "npm run -s dester -- -w --no-r -m",
@@ -45,6 +47,7 @@
     "@babel/plugin-transform-block-scoping": "^7.16.0",
     "@babel/plugin-transform-template-literals": "^7.16.0",
     "dester": "0.x",
+    "jest": "^27.4.0",
     "typescript": "4.x"
   }
 }
