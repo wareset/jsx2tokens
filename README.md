@@ -88,17 +88,17 @@ console.log(TYPES)
 
 ## Options
 
-**loc**: boolean  /** Default: false. Source location */
-**range**: boolean  /** Default: false. Source position */
-**strict**: boolean  /** Default: true. Cause an error if the last "deep" is not equal to 0. */
-**useJSX**: boolean  /** Default: true. Enable\disable search JSX (TSX). */
-**insideJSX**: boolean  /** Default: false. If "true", parsing will start as text JSX (TSX). */
-**skipStyleTags**: boolean  /** Default: false. If "true", the content inside the <style> will only be JSXText. */
-**skipScriptTags**: boolean  /** Default: false. If "true", the content inside the <script> will only be JSXText. */
-**parseScriptTags**: boolean  /** Default: false. If "true", the content inside the <script> will be tokenized. */
-**considerChildlessTags**: boolean /** Default: false. If "true", the <img> and other childless tags will be like <img/>. */
-**proxy**: ((v: TypeToken, k: number, a: TypeToken[], proxyCtx) => boolean | void) /** Default: noop. Middleware like */
-**proxyCtx**: any /** Default: {}. Advanced context for proxy */
+- **loc**: boolean  /** Default: false. Source location */
+- **range**: boolean  /** Default: false. Source position */
+- **strict**: boolean  /** Default: true. Cause an error if the last "deep" is not equal to 0. */
+- **useJSX**: boolean  /** Default: true. Enable\disable search JSX (TSX). */
+- **insideJSX**: boolean  /** Default: false. If "true", parsing will start as text JSX (TSX). */
+- **skipStyleTags**: boolean  /** Default: false. If "true", the content inside the <style> will only be JSXText. */
+- **skipScriptTags**: boolean  /** Default: false. If "true", the content inside the <script> will only be JSXText. */
+- **parseScriptTags**: boolean  /** Default: false. If "true", the content inside the <script> will be tokenized. */
+- **considerChildlessTags**: boolean /** Default: false. If "true", the <img> and other childless tags will be like <img/>. */
+- **proxy**: ((v: TypeToken, k: number, a: TypeToken[], proxyCtx) => boolean | void) /** Default: noop. Middleware like */
+- **proxyCtx**: any /** Default: {}. Advanced context for proxy */
 
 ### Loc and range:
 
