@@ -323,7 +323,6 @@ import { jsx2tokens } from 'jsx2tokens'
 
 const code = '<script>console.log(`hello`)</script>'
 const tokens = jsx2tokens(code, {
-  skipScriptTags: false, // must be 'false'
   parseScriptTags: true
 })
 

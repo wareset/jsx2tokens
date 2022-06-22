@@ -3,7 +3,7 @@
 dester builds:
 index.ts
 */
-var e, a, s, c, r, t, i, n, E, k, d, l, o, S, p, b, u, _, T, N, f, x, L, R, O = {
+var e, a, s, c, r, t, i, n, E, k, l, d, o, S, p, b, u, _, T, f, N, x, L, R, O = {
     BOOLEAN: "Boolean",
     IDENTIFIER: "Identifier",
     KEYWORD: "Keyword",
@@ -91,9 +91,9 @@ E = (e, a) => {
     }
     return e.rangeStart = e.idx, e.lineStart = e.line, e.columnStart = e.idx - e.columnDiff, 
     !e.isBreakLoop;
-}, d = (e, a, s = O.PUCNTUATOR) => {
-    k(e) && (a && (e.idx += a), l(e), E(e, s), i(e));
-}, l = e => {
+}, l = (e, a, s = O.PUCNTUATOR) => {
+    k(e) && (a && (e.idx += a), d(e), E(e, s), i(e));
+}, d = e => {
     e.tokenLast && e.tokenLast.type === O.JSX_TAG_OPENER_START && (e.tagNameLast = e.source.slice(e.rangeStart, e.idx + 1));
 }, o = e => {
     if (k(e)) {
@@ -155,7 +155,7 @@ E = (e, a) => {
             e.idx--;
             break e;
         }
-        l(e);
+        d(e);
         var a = e.tokenLast;
         E(e, O.IDENTIFIER);
         var s = e.tokenLast;
@@ -312,8 +312,8 @@ E = (e, a) => {
             }
         }
         E(e, O.TEMPLATE), s && e.deep++;
-        var d = e.tokenLast, l = d.value[0], o = d.value[d.value.length - 1];
-        "`" === l ? "`" !== o && (d.type = O.TEMPLATE_HEAD) : d.type = "`" !== o ? O.TEMPLATE_MIDDLE : O.TEMPLATE_TAIL, 
+        var l = e.tokenLast, d = l.value[0], o = l.value[l.value.length - 1];
+        "`" === d ? "`" !== o && (l.type = O.TEMPLATE_HEAD) : l.type = "`" !== o ? O.TEMPLATE_MIDDLE : O.TEMPLATE_TAIL, 
         i(e);
     }
 }, _ = e => {
@@ -398,7 +398,7 @@ E = (e, a) => {
         }
         E(e, O.NUMERIC), i(e);
     }
-}, N = e => {
+}, f = e => {
     if (k(e)) {
         var a, s = 1;
         e.idx++;
@@ -418,7 +418,7 @@ E = (e, a) => {
         }
         E(e, O.NUMERIC), i(e);
     }
-}, f = e => {
+}, N = e => {
     if (k(e)) {
         var a, s = 1;
         e.idx++;
@@ -546,14 +546,14 @@ E = (e, a) => {
         var a = e.tokenLast;
         E(e, O.JSX_COMMENT), i(e), e.tokenLast = a;
     }
-}, (i, {loc: E = !1, range: l = !1, strict: C = !0, useJSX: I = !0, insideJSX: A = !1, skipStyleTags: X = !1, skipScriptTags: M = !1, parseScriptTags: m = !1, considerChildlessTags: v = !1, proxyCtx: h = {}, proxy: J = s} = {}) => {
+}, (i, {loc: E = !1, range: d = !1, strict: C = !0, useJSX: I = !0, insideJSX: A = !1, skipStyleTags: X = !1, skipScriptTags: M = !1, parseScriptTags: m = !1, considerChildlessTags: v = !1, proxyCtx: h = {}, proxy: J = s} = {}) => {
     var D = I && A ? "%><%" : "", y = {
         source: i,
         isBreakLoop: !1,
         proxy: J,
         proxyCtx: h,
         loc: E,
-        range: l,
+        range: d,
         useJSX: I,
         skipStyleTags: X,
         skipScriptTags: M,
@@ -573,13 +573,13 @@ E = (e, a) => {
         __env__: [ D ]
     };
     return (s => {
-        var i, E, l, C, I;
+        var i, E, d, C, I;
         e: for (;!s.isBreakLoop; ) if (s.idx++, i = r(s, 0), "%><%" === s.ENV) switch (i) {
           case "":
             break e;
 
           case "{":
-            n(s, "%jsxexp%"), d(s, 0, O.JSX_EXPRESSION_START), s.deep++;
+            n(s, "%jsxexp%"), l(s, 0, O.JSX_EXPRESSION_START), s.deep++;
             break;
 
           case "<":
@@ -639,12 +639,12 @@ E = (e, a) => {
             switch (r(s, 1)) {
               case "b":
               case "B":
-                N(s);
+                f(s);
                 break;
 
               case "o":
               case "O":
-                f(s);
+                N(s);
                 break;
 
               case "x":
@@ -694,12 +694,12 @@ E = (e, a) => {
                 break;
 
               default:
-                d(s, E === i && r(s, 2) === i ? 2 : 0);
+                l(s, E === i && r(s, 2) === i ? 2 : 0);
             }
             break;
 
           case "{":
-            n(s, "%{}%"), d(s, 0), s.deep++;
+            n(s, "%{}%"), l(s, 0), s.deep++;
             break;
 
           case "}":
@@ -709,11 +709,11 @@ E = (e, a) => {
                 break;
 
               case "%{}%":
-                s.deep--, n(s, null), d(s, 0);
+                s.deep--, n(s, null), l(s, 0);
                 break;
 
               case "%jsxexp%":
-                s.deep--, n(s, null), d(s, 0, O.JSX_EXPRESSION_END);
+                s.deep--, n(s, null), l(s, 0, O.JSX_EXPRESSION_END);
                 break;
 
               default:
@@ -722,91 +722,91 @@ E = (e, a) => {
             break;
 
           case "(":
-            n(s, "%()%"), d(s, 0), s.deep++;
+            n(s, "%()%"), l(s, 0), s.deep++;
             break;
 
           case ")":
-            "%()%" === s.ENV ? (s.deep--, n(s, null), d(s, 0)) : c(s, 'Bracket ")"');
+            "%()%" === s.ENV ? (s.deep--, n(s, null), l(s, 0)) : c(s, 'Bracket ")"');
             break;
 
           case "[":
-            n(s, "%[]%"), d(s, 0), s.deep++;
+            n(s, "%[]%"), l(s, 0), s.deep++;
             break;
 
           case "]":
-            "%[]%" === s.ENV ? (s.deep--, n(s, null), d(s, 0)) : c(s, 'Bracket "]"');
+            "%[]%" === s.ENV ? (s.deep--, n(s, null), l(s, 0)) : c(s, 'Bracket "]"');
             break;
 
           case ";":
           case ",":
           case "~":
           case ":":
-            d(s, 0);
+            l(s, 0);
             break;
 
           case "^":
           case "%":
-            d(s, "=" !== r(s, 1) ? 0 : 1);
+            l(s, "=" !== r(s, 1) ? 0 : 1);
             break;
 
           case "!":
-            d(s, "=" !== r(s, 1) ? 0 : "=" !== r(s, 2) ? 1 : 2);
+            l(s, "=" !== r(s, 1) ? 0 : "=" !== r(s, 2) ? 1 : 2);
             break;
 
           case "+":
           case "-":
-            d(s, "=" === (E = r(s, 1)) || E === i ? 1 : 0);
+            l(s, "=" === (E = r(s, 1)) || E === i ? 1 : 0);
             break;
 
           case "?":
-            d(s, "." === (E = r(s, 1)) ? 1 : E !== i ? 0 : "=" !== r(s, 2) ? 1 : 2);
+            l(s, "." === (E = r(s, 1)) ? 1 : E !== i ? 0 : "=" !== r(s, 2) ? 1 : 2);
             break;
 
           case "*":
           case "&":
           case "|":
-            d(s, "=" === (E = r(s, 1)) ? 1 : E !== i ? 0 : "=" !== r(s, 2) ? 1 : 2);
+            l(s, "=" === (E = r(s, 1)) ? 1 : E !== i ? 0 : "=" !== r(s, 2) ? 1 : 2);
             break;
 
           case "=":
-            d(s, ">" === (E = r(s, 1)) ? 1 : E !== i ? 0 : r(s, 2) !== i ? 1 : 2);
+            l(s, ">" === (E = r(s, 1)) ? 1 : E !== i ? 0 : r(s, 2) !== i ? 1 : 2);
             break;
 
           case "<":
-            E = r(s, 1), s.useJSX && ("%jsxtag%" === s.ENV && ~n(s, null) || "/" === E && "%script%" === s.ENV[0] && (">" === r(s, 2) || s.source.slice(s.idx + 2, s.idx + 2 + s.ENV[1].length) === s.ENV[1]) || (!(I = s.tokenLast) || I.type === O.KEYWORD || I.type === O.MODIFIER || I.type === O.JSX_EXPRESSION_START || I.type === O.PUCNTUATOR && /[^!.})\]]$/.test(I.value)) && !a(s.source, s.idx)) ? E.trim() ? "!" === E && "-" === r(s, 2) && "-" === r(s, 3) ? R(s) : "/" !== E || /[/*]/.test(r(s, 2)) ? (d(s, 0, O.JSX_TAG_OPENER_START), 
+            E = r(s, 1), s.useJSX && ("%jsxtag%" === s.ENV && ~n(s, null) || "/" === E && "%script%" === s.ENV[0] && (">" === r(s, 2) || s.source.slice(s.idx + 2, s.idx + 2 + s.ENV[1].length) === s.ENV[1]) || (!(I = s.tokenLast) || I.type === O.KEYWORD || I.type === O.MODIFIER || I.type === O.JSX_EXPRESSION_START || I.type === O.PUCNTUATOR && /[^!.})\]]$/.test(I.value)) && !a(s.source, s.idx)) ? E.trim() ? "!" === E && "-" === r(s, 2) && "-" === r(s, 3) ? R(s) : "/" !== E || /[/*]/.test(r(s, 2)) ? (l(s, 0, O.JSX_TAG_OPENER_START), 
             s.tagNameLast = "", n(s, "%<>%"), s.deep++) : ("%><%" !== s.ENV && "%script%" !== s.ENV[0] || (n(s, null), 
-            s.deep--), d(s, 1, O.JSX_TAG_CLOSER_START), n(s, "%</>%"), s.deep++) : d(s, 0) : d(s, "=" === (E = r(s, 1)) ? 1 : E !== i ? 0 : "=" !== r(s, 2) ? 1 : 2);
+            s.deep--), l(s, 1, O.JSX_TAG_CLOSER_START), n(s, "%</>%"), s.deep++) : l(s, 0) : l(s, "=" === (E = r(s, 1)) ? 1 : E !== i ? 0 : "=" !== r(s, 2) ? 1 : 2);
             break;
 
           case ">":
             switch (s.ENV) {
               case "%<>%":
                 if (n(s, null), "script" === s.tagNameLast) {
-                    if (s.deep--, d(s, 0, O.JSX_TAG_OPENER_END), s.deep++, s.skipScriptTags) {
+                    if (s.deep--, l(s, 0, O.JSX_TAG_OPENER_END), s.deep++, s.parseScriptTags) n(s, [ "%script%", s.tagNameLast ]); else if (s.skipScriptTags) {
                         n(s, "%><%");
                         var A = s.source.indexOf("</script", s.idx);
                         A < 0 && c(s, "script"), L(s, A - 1);
-                    } else s.parseScriptTags ? n(s, [ "%script%", s.tagNameLast ]) : n(s, "%><%");
+                    } else n(s, "%><%");
                     break;
                 }
                 if ("style" === s.tagNameLast) {
-                    if (s.deep--, d(s, 0, O.JSX_TAG_OPENER_END), s.deep++, n(s, "%><%"), s.skipStyleTags) {
+                    if (s.deep--, l(s, 0, O.JSX_TAG_OPENER_END), s.deep++, n(s, "%><%"), s.skipStyleTags) {
                         var X = s.source.indexOf("</style", s.idx);
                         X < 0 && c(s, "style"), L(s, X - 1);
                     }
                     break;
                 }
                 /^[!?%]/.test(s.tagNameLast) || s.considerChildlessTags && (C = s.tagNameLast, !0 === g[C]) ? (s.deep--, 
-                d(s, 0, O.JSX_TAG_OPENER_END_CHILDLESS)) : (s.deep--, d(s, 0, O.JSX_TAG_OPENER_END), 
+                l(s, 0, O.JSX_TAG_OPENER_END_CHILDLESS)) : (s.deep--, l(s, 0, O.JSX_TAG_OPENER_END), 
                 s.deep++, n(s, "%><%"));
                 break;
 
               case "%</>%":
-                s.deep--, n(s, null), d(s, 0, O.JSX_TAG_CLOSER_END);
+                s.deep--, n(s, null), l(s, 0, O.JSX_TAG_CLOSER_END);
                 break;
 
               default:
-                d(s, "=" === (E = r(s, 1)) ? 1 : E !== i ? 0 : "=" === (l = r(s, 2)) ? 2 : l !== i ? 1 : "=" !== r(s, 3) ? 2 : 3);
+                l(s, "=" === (E = r(s, 1)) ? 1 : E !== i ? 0 : "=" === (d = r(s, 2)) ? 2 : d !== i ? 1 : "=" !== r(s, 3) ? 2 : 3);
             }
             break;
 
@@ -821,7 +821,7 @@ E = (e, a) => {
                 break;
 
               default:
-                "<" === s.ENV[1] && ">" === E ? (s.deep--, n(s, null), d(s, 1, "/" !== s.ENV[2] ? O.JSX_TAG_OPENER_END_CHILDLESS : O.JSX_TAG_CLOSER_END)) : e(s.tokenLast) ? _(s) : d(s, "=" === E ? 1 : 0);
+                "<" === s.ENV[1] && ">" === E ? (s.deep--, n(s, null), l(s, 1, "/" !== s.ENV[2] ? O.JSX_TAG_OPENER_END_CHILDLESS : O.JSX_TAG_CLOSER_END)) : e(s.tokenLast) ? _(s) : l(s, "=" === E ? 1 : 0);
             }
             break;
 

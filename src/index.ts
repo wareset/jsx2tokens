@@ -1169,13 +1169,13 @@ export const jsx2tokens = (() => {
                     iam.deep--
                     createPunctuator(iam, 0, TYPES.JSX_TAG_OPENER_END)
                     iam.deep++
-                    if (iam.skipScriptTags) {
+                    if (iam.parseScriptTags) {
+                      env(iam, ['%script%', iam.tagNameLast])
+                    } else if (iam.skipScriptTags) {
                       env(iam, '%><%')
                       const last = iam.source.indexOf('</script', iam.idx)
                       if (last < 0) ERROR(iam, 'script')
                       CASE_JSX_TEXT(iam, last - 1)
-                    } else if (iam.parseScriptTags) {
-                      env(iam, ['%script%', iam.tagNameLast])
                     } else {
                       env(iam, '%><%')
                     }
