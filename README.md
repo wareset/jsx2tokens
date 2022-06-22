@@ -10,8 +10,8 @@ import { jsx2tokens } from 'jsx2tokens'
 // const { jsx2tokens } = require('jsx2tokens')
 
 const code =
-`function App() {
-  return <div>some</div>
+`function App(props) {
+  return <div className="container" {...props}>some {12}</div>
 }`
 
 const tokens = jsx2tokens(code)
@@ -23,6 +23,7 @@ console.log(tokens)
   { deep: 0, type: 'Space', value: ' ' },
   { deep: 0, type: 'Identifier', value: 'App' },
   { deep: 0, type: 'Punctuator', value: '(' },
+  { deep: 1, type: 'Identifier', value: 'props' },
   { deep: 0, type: 'Punctuator', value: ')' },
   { deep: 0, type: 'Space', value: ' ' },
   { deep: 0, type: 'Punctuator', value: '{' },
@@ -31,8 +32,20 @@ console.log(tokens)
   { deep: 1, type: 'Space', value: ' ' },
   { deep: 1, type: 'JSXTagOpenerStart', value: '<' },
   { deep: 2, type: 'Identifier', value: 'div' },
+  { deep: 2, type: 'Space', value: ' ' },
+  { deep: 2, type: 'Identifier', value: 'className' },
+  { deep: 2, type: 'Punctuator', value: '=' },
+  { deep: 2, type: 'String', value: '"container"' },
+  { deep: 2, type: 'Space', value: ' ' },
+  { deep: 2, type: 'Punctuator', value: '{' },
+  { deep: 3, type: 'Punctuator', value: '...' },
+  { deep: 3, type: 'Identifier', value: 'props' },
+  { deep: 2, type: 'Punctuator', value: '}' },
   { deep: 1, type: 'JSXTagOpenerEnd', value: '>' },
-  { deep: 2, type: 'JSXText', value: 'some' },
+  { deep: 2, type: 'JSXText', value: 'some ' },
+  { deep: 2, type: 'JSXExpressionStart', value: '{' },
+  { deep: 3, type: 'Numeric', value: '12' },
+  { deep: 2, type: 'JSXExpressionEnd', value: '}' },
   { deep: 1, type: 'JSXTagCloserStart', value: '</' },
   { deep: 2, type: 'Identifier', value: 'div' },
   { deep: 1, type: 'JSXTagCloserEnd', value: '>' },
@@ -56,7 +69,7 @@ console.log(TYPES)
   IDENTIFIER                  : 'Identifier', // a, b, app...
   KEYWORD                     : 'Keyword', // let, for, return...
   NULL                        : 'Null', // null
-  NUMERIC                     : 'Numeric', // 1_000, 0.6e-5, 0x1...
+  NUMERIC                     : 'Numeric', // 1_000, 0.6e-5, 0x1b...
   PUCNTUATOR                  : 'Punctuator', // +-=!&...
   REGULAR_EXPRESSION          : 'RegularExpression', // /\s+/
   STRING                      : 'String', // 'single', "double"

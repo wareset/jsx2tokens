@@ -1,5 +1,5 @@
 /*
-Types
+@Types
 --------------------------------------------------------------------------------
 */
 export declare type TypeRange = [number, number]
@@ -13,36 +13,6 @@ export declare type TypeSourceLocation = {
   end: TypeSourcePosition
 }
 
-// export declare type TypeTokenType =
-//   typeof TYPES.BOOLEAN |
-//   typeof TYPES.IDENTIFIER |
-//   typeof TYPES.KEYWORD |
-//   typeof TYPES.NULL |
-//   typeof TYPES.NUMERIC |
-//   typeof TYPES.PUCNTUATOR |
-//   typeof TYPES.REGULAR_EXPRESSION |
-//   typeof TYPES.STRING |
-
-//   typeof TYPES.TEMPLATE |
-//   typeof TYPES.TEMPLATE_HEAD |
-//   typeof TYPES.TEMPLATE_MIDDLE |
-//   typeof TYPES.TEMPLATE_TAIL |
-  
-//   typeof TYPES.COMMENT_BLOCK |
-//   typeof TYPES.COMMENT_LINE |
-  
-//   typeof TYPES.SPACE |
-//   typeof TYPES.MODIFIER |
-
-//   typeof TYPES.JSX_TAG_OPENER_START |
-//   typeof TYPES.JSX_TAG_OPENER_END |
-//   typeof TYPES.JSX_TAG_OPENER_END_CHILDLESS |
-//   typeof TYPES.JSX_TAG_CLOSER_START |
-//   typeof TYPES.JSX_TAG_CLOSER_END |
-//   typeof TYPES.JSX_EXPRESSION_START |
-//   typeof TYPES.JSX_EXPRESSION_END |
-//   typeof TYPES.JSX_TEXT |
-//   typeof TYPES.JSX_COMMENT
 export declare type TypeTokenType = typeof TYPES[keyof typeof TYPES]
 
 export declare type TypeToken = {
@@ -57,46 +27,16 @@ declare type TypeJscTokenizeCallback =
   <C extends object>(v: TypeToken, k: number, a: TypeToken[], ctx: C) => boolean | void
 
 /*
-Tokens
+TYPES
 --------------------------------------------------------------------------------
 */
-// export const TYPES.BOOLEAN = 'Boolean'
-// export const TYPES.IDENTIFIER = 'Identifier'
-// export const TYPES.KEYWORD = 'Keyword'
-// export const TYPES.NULL = 'Null'
-// export const TYPES.NUMERIC = 'Numeric'
-// export const TYPES.PUCNTUATOR = 'Punctuator'
-// export const TYPES.REGULAR_EXPRESSION = 'RegularExpression'
-// export const TYPES.STRING = 'String'
-
-// export const TYPES.TEMPLATE = 'Template'
-// export const TYPES.TEMPLATE_HEAD = 'TemplateHead'
-// export const TYPES.TEMPLATE_MIDDLE = 'TemplateMiddle'
-// export const TYPES.TEMPLATE_TAIL = 'TemplateTail'
-
-// export const TYPES.COMMENT_BLOCK = 'CommentBlock'
-// export const TYPES.COMMENT_LINE = 'CommentLine'
-
-// export const TYPES.SPACE = 'Space'
-// export const TYPES.MODIFIER = 'Modifier'
-
-// export const TYPES.JSX_TAG_OPENER_START = 'JSXTagOpenerStart'
-// export const TYPES.JSX_TAG_OPENER_END = 'JSXTagOpenerEnd'
-// export const TYPES.JSX_TAG_OPENER_END_CHILDLESS = 'JSXTagOpenerEndChildless'
-// export const TYPES.JSX_TAG_CLOSER_START = 'JSXTagCloserStart'
-// export const TYPES.JSX_TAG_CLOSER_END = 'JSXTagCloserEnd'
-// export const TYPES.JSX_EXPRESSION_START = 'JSXExpressionStart'
-// export const TYPES.JSX_EXPRESSION_END = 'JSXExpressionEnd'
-// export const TYPES.JSX_TEXT = 'JSXText'
-// export const TYPES.JSX_COMMENT = 'JSXComment'
-
 export const TYPES = {
   // Base
   BOOLEAN                     : 'Boolean', // true, false
   IDENTIFIER                  : 'Identifier', // a, b, app...
   KEYWORD                     : 'Keyword', // let, for, return...
   NULL                        : 'Null', // null
-  NUMERIC                     : 'Numeric', // 1_000, 0.6e-5, 0x1...
+  NUMERIC                     : 'Numeric', // 1_000, 0.6e-5, 0x1b...
   PUCNTUATOR                  : 'Punctuator', // +-=!&...
   REGULAR_EXPRESSION          : 'RegularExpression', // /\s+/
   STRING                      : 'String', // 'single', "double"
@@ -124,6 +64,10 @@ export const TYPES = {
   JSX_COMMENT                 : 'JSXComment', // <!--...-->
 } as const
 
+/*
+CHILDLESS_TAGS
+--------------------------------------------------------------------------------
+*/
 export const CHILDLESS_TAGS = {
   area   : true,
   base   : true,
