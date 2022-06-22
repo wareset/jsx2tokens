@@ -1171,13 +1171,13 @@ export const jsx2tokens = (() => {
                     iam.deep++
                     if (iam.parseScriptTags) {
                       env(iam, ['%script%', iam.tagNameLast])
-                    } else if (iam.skipScriptTags) {
-                      env(iam, '%><%')
-                      const last = iam.source.indexOf('</script', iam.idx)
-                      if (last < 0) ERROR(iam, 'script')
-                      CASE_JSX_TEXT(iam, last - 1)
                     } else {
                       env(iam, '%><%')
+                      if (iam.skipScriptTags) {
+                        const last = iam.source.indexOf('</script', iam.idx)
+                        if (last < 0) ERROR(iam, 'script')
+                        CASE_JSX_TEXT(iam, last - 1)
+                      }
                     }
                     break
                   }
