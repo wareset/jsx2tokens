@@ -87,19 +87,21 @@ console.log(TYPES)
 ```
 
 ## Options
-- loc: boolean  /** Default: false. Source location */
-- range: boolean  /** Default: false. Source position */
-- strict: boolean  /** Default: true. Cause an error if the last "deep" is not equal to 0. */
-- useJSX: boolean  /** Default: true. Enable\disable search JSX (TSX). */
-- insideJSX: boolean  /** Default: false. If "true", parsing will start as text JSX (TSX). */
-- skipStyleTags: boolean  /** Default: false. If "true", the content inside the <style> will only be JSXText. */
-- skipScriptTags: boolean  /** Default: false. If "true", the content inside the <script> will only be JSXText. */
-- parseScriptTags: boolean  /** Default: false. If "true", the content inside the <script> will be tokenized. */
-- considerChildlessTags: boolean /** Default: false. If "true", the <img> and other childless tags will be like <img/>. */
-- proxy: ((v: TypeToken, k: number, a: TypeToken[], proxyCtx) => boolean | void) /** Default: noop. Middleware like */
-- proxyCtx: any /** Default: {}. Advanced context for proxy */
+
+**loc**: boolean  /** Default: false. Source location */
+**range**: boolean  /** Default: false. Source position */
+**strict**: boolean  /** Default: true. Cause an error if the last "deep" is not equal to 0. */
+**useJSX**: boolean  /** Default: true. Enable\disable search JSX (TSX). */
+**insideJSX**: boolean  /** Default: false. If "true", parsing will start as text JSX (TSX). */
+**skipStyleTags**: boolean  /** Default: false. If "true", the content inside the <style> will only be JSXText. */
+**skipScriptTags**: boolean  /** Default: false. If "true", the content inside the <script> will only be JSXText. */
+**parseScriptTags**: boolean  /** Default: false. If "true", the content inside the <script> will be tokenized. */
+**considerChildlessTags**: boolean /** Default: false. If "true", the <img> and other childless tags will be like <img/>. */
+**proxy**: ((v: TypeToken, k: number, a: TypeToken[], proxyCtx) => boolean | void) /** Default: noop. Middleware like */
+**proxyCtx**: any /** Default: {}. Advanced context for proxy */
 
 ### Loc and range:
+
 ```js
 import { jsx2tokens } from 'jsx2tokens'
 
@@ -166,7 +168,9 @@ console.log(tokens)
 ```
 
 ### strict:
+
 enable:
+
 ```js
 import { jsx2tokens } from 'jsx2tokens'
 
@@ -177,7 +181,9 @@ const tokens = jsx2tokens(code, {
 
 // Uncaught Error: jsx2tokens - deep: {"line":1,"column":5,"range":5}
 ```
+
 disable:
+
 ```js
 import { jsx2tokens } from 'jsx2tokens'
 
@@ -198,10 +204,11 @@ console.log(tokens)
 ```
 
 ### useJSX:
+
 !If you parse the 'ts' file, errors may occur. Then it is better to disable 'useJSX'
 
 Not valid 'ts':
-'<T>' - will be interpreted as JSX elements
+
 ```js
 import { jsx2tokens } from 'jsx2tokens'
 
@@ -209,11 +216,12 @@ const code = 'let a = <T>(a: T) => a'
 const tokens = jsx2tokens(code, {
   useJSX: true // default
 })
-
 // Uncaught Error: jsx2tokens - deep...
+// '<T>' - will be interpreted as JSX elements
 ```
 
 Valid 'ts':
+
 ```js
 import { jsx2tokens } from 'jsx2tokens'
 
@@ -231,7 +239,9 @@ const tokens = jsx2tokens(code, {
 ```
 
 ### insideJSX:
+
 Allows you to parse templates:
+
 ```js
 import { jsx2tokens } from 'jsx2tokens'
 
@@ -251,7 +261,9 @@ console.log(tokens)
 ```
 
 ### skipStyleTags
+
 standard behavior:
+
 ```js
 import { jsx2tokens } from 'jsx2tokens'
 
@@ -276,6 +288,7 @@ console.log(tokens)
 ```
 
 miss style contents:
+
 ```js
 import { jsx2tokens } from 'jsx2tokens'
 
@@ -298,10 +311,13 @@ console.log(tokens)
 ```
 
 ### skipScriptTags:
+
 works exactly the same as the 'skipStyleTags', but for 'script' tags
 
 ### parseScriptTags:
+
 tokenize code inside script tags:
+
 ```js
 import { jsx2tokens } from 'jsx2tokens'
 
@@ -330,7 +346,9 @@ console.log(tokens)
 ```
 
 ### considerChildlessTags:
+
 automatically close childless tags
+
 ```js
 import { jsx2tokens } from 'jsx2tokens'
 
@@ -355,6 +373,7 @@ console.log(tokens)
 ```
 
 #### Childless tags:
+
 ```js
 import { CHILDLESS_TAGS } from 'jsx2tokens'
 // or 
@@ -384,7 +403,9 @@ console.log(CHILDLESS_TAGS)
 ```
 
 ### proxy and proxyCtx
+
 Simple example:
+
 ```js
 import { jsx2tokens, TYPES } from 'jsx2tokens'
 
@@ -408,4 +429,5 @@ const tokens = jsx2tokens(code, {
 ```
 
 ## License
+
 [MIT](LICENSE)
