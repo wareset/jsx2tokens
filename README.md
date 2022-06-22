@@ -110,7 +110,7 @@ console.log(TOKEN_TYPES)
 - **skipScriptTags**: boolean  /** Default: false. If "true", the content inside the <script> will only be JSXText. */
 - **parseScriptTags**: boolean  /** Default: false. If "true", the content inside the <script> will be tokenized. */
 - **considerChildlessTags**: boolean /** Default: false. If "true", the <img> and other childless tags will be like <img/>. */
-- **proxy**: ((v: TypeToken, k: number, a: TypeToken[], proxyCtx) => boolean | void) /** Default: noop. Middleware like */
+- **proxy**: ((v: TypeToken, k: number, a: TypeToken[], proxyCtx) => boolean | void) /** Default: undefined. Middleware like */
 - **proxyCtx**: any /** Default: {}. Advanced context for proxy */
 
 ### Loc and range:
@@ -434,7 +434,7 @@ const tokens = jsx2tokens(code, {
     }
 
     // break if there are more than 10 tokens
-    if (a.length > 10) return true
+    if (tokens.length > 10) return true
   }
 })
 

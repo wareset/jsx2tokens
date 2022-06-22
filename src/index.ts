@@ -124,14 +124,12 @@ export const jsx2tokens = (() => {
     return false
   }
 
-  const noopFalse = ((): false => false) as TypeJscTokenizeCallback
-
   // ---------------------------------------------------------------------------
 
   type TypeIam = {
     readonly source: string
     isBreakLoop: boolean
-    readonly proxy: TypeJscTokenizeCallback
+    readonly proxy: TypeJscTokenizeCallback | undefined
     readonly proxyCtx: any
     readonly loc: boolean
     readonly range: boolean
@@ -165,7 +163,9 @@ export const jsx2tokens = (() => {
   }
 
   const runCallback = (iam: TypeIam): void => {
-    iam.isBreakLoop = !!iam.proxy(iam.tokenLast!, iam.tokens.length - 1, iam.tokens, iam.proxyCtx)
+    if (iam.proxy) {
+      iam.isBreakLoop = !!iam.proxy(iam.tokenLast!, iam.tokens.length - 1, iam.tokens, iam.proxyCtx)
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -1230,8 +1230,8 @@ export const jsx2tokens = (() => {
       considerChildlessTags = false,
       /** Default: {}. Advanced context for proxy */
       proxyCtx = {} as C,
-      /** Default: noop. Middleware like */
-      proxy = noopFalse as ((v: TypeToken, k: number, a: TypeToken[], proxyCtx: C) => boolean | void)
+      /** Default: undefined. Middleware like */
+      proxy = void 0 as (((v: TypeToken, k: number, a: TypeToken[], proxyCtx: C) => boolean | void) | undefined)
     } = {}
   ) => {
     const ENV = useJSX && insideJSX ? '%><%' : ''
