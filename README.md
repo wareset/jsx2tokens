@@ -59,7 +59,7 @@ console.log(tokens)
 ```js
 import { TOKEN_TYPES } from 'jsx2tokens'
 // or 
-// const { TYPES } = require('jsx2tokens')
+// const { TOKEN_TYPES } = require('jsx2tokens')
 
 console.log(TOKEN_TYPES)
 // TOKEN_TYPES equal to:
