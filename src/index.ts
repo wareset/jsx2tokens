@@ -598,8 +598,8 @@ export const jsx2tokens = (() => {
             nS = 1
             break
           case '.':
-            if (nS) ERROR(iam, TYPES.NUMERIC)
-            if (nD) {
+            if (nD !== 1 && nS) ERROR(iam, TYPES.NUMERIC)
+            if (nD || nE) {
               iam.idx--
               break LOOP
             }
@@ -631,6 +631,7 @@ export const jsx2tokens = (() => {
           case '8':
           case '9':
             if (nE === 1) nE = 2
+            if (nD === 1) nD = 2
             nS = 0
             break
           default:
