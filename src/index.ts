@@ -154,7 +154,7 @@ export const jsx2tokens = (() => {
 
   const ERROR = (iam: TypeIam, ...a: any): never => {
     throw new Error('jsx2tokens - ' + a.join(' ') + ': ' +
-    JSON.stringify({ line: iam.lineStart, column: iam.columnStart, range: iam.rangeStart }))
+    JSON.stringify({ value: iam.source.slice(iam.rangeStart, iam.idx + 1), line: iam.lineStart, column: iam.columnStart, range: iam.rangeStart }))
   }
 
   const char = (iam: TypeIam, offset: number): string => iam.source.charAt(iam.idx + offset)
@@ -585,9 +585,8 @@ export const jsx2tokens = (() => {
     }
   }
 
-  const CASE_NUMERIC = (iam: TypeIam, nD: number, nE: number): void => {
+  const CASE_NUMERIC = (iam: TypeIam, nD: number, nE: number, nS: number): void => {
     if (initToken(iam)) {
-      let nS = nD || nE || 0
       let ch0: string
   
       iam.idx += nS
@@ -609,14 +608,13 @@ export const jsx2tokens = (() => {
             break
           case 'e':
           case 'E':
-            if (nE) ERROR(iam, TYPES.NUMERIC)
+            if (nE || nS) ERROR(iam, TYPES.NUMERIC)
             nE = 1
             nS = 1
             break
           case '+':
           case '-':
             if (nE !== 1) {
-              if (nS) ERROR(iam, TYPES.NUMERIC)
               iam.idx--
               break LOOP
             }
@@ -637,7 +635,7 @@ export const jsx2tokens = (() => {
             break
           default:
             if (ch0 !== 'n') iam.idx--
-            else if (nS) ERROR(iam, TYPES.NUMERIC)
+            if (nS) ERROR(iam, TYPES.NUMERIC)
             break LOOP
         }
       }
@@ -939,14 +937,14 @@ export const jsx2tokens = (() => {
                   CASE_NUMERIC_X(iam)
                   break
                 case '.':
-                  CASE_NUMERIC(iam, 1, 0)
+                  CASE_NUMERIC(iam, 1, 0, 1)
                   break
                 case 'e':
                 case 'E':
-                  CASE_NUMERIC(iam, 0, 1)
+                  CASE_NUMERIC(iam, 0, 1, 1)
                   break
                 default:
-                  CASE_NUMERIC(iam, 0, 0)
+                  CASE_NUMERIC(iam, 0, 0, 0)
               }
               break
   
@@ -959,7 +957,7 @@ export const jsx2tokens = (() => {
             case '7':
             case '8':
             case '9':
-              CASE_NUMERIC(iam, 0, 0)
+              CASE_NUMERIC(iam, 0, 0, 0)
               break
   
             // Punctuators
@@ -976,7 +974,7 @@ export const jsx2tokens = (() => {
                 case '7':
                 case '8':
                 case '9':
-                  CASE_NUMERIC(iam, 1, 0)
+                  CASE_NUMERIC(iam, 1, 0, 0)
                   break
                 default:
                   createPunctuator(iam, ch1 === ch0 && char(iam, 2) === ch0 ? 2 : 0)
