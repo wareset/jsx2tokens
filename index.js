@@ -50,7 +50,7 @@ var e, a, s, c, r, t, i, n, E, l, k, d, o, S, p, u, b, _, T, f, N, x, L, R, O = 
     source: !0,
     track: !0,
     wbr: !0
-}, C = (a = e = (a, s) => !a || a.type === O.KEYWORD || a.type === O.MODIFIER || a.type === O.JSX_EXPRESSION_START || a.type === O.PUCNTUATOR && "!.})]".indexOf(a.value) < 0 || "!" === a.value && (a !== s.tl2 && e(s.tl2, s) || a !== s.tl3 && e(s.tl3, s)), 
+}, C = (a = e = (a, s) => !a || a.type === O.KEYWORD || a.type === O.MODIFIER || a.type === O.JSX_EXPRESSION_START || a.type === O.PUCNTUATOR && !/^(--|\+\+|[!.})\]])$/.test(a.value) || "!" === a.value && (a !== s.tl2 && e(s.tl2, s) || a !== s.tl3 && e(s.tl3, s)), 
 s = (e, a) => {
     for (var s = !1, c = !1, r = a + 1; r < e.length; r++) if (c || (c = !/\s/.test(e[r]))) {
         if ("," === e[r] || "=" === e[r]) return !0;

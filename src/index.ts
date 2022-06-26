@@ -102,7 +102,7 @@ export const jsx2tokens = (() => {
   token.type === TYPES.KEYWORD ||
   token.type === TYPES.MODIFIER ||
   token.type === TYPES.JSX_EXPRESSION_START ||
-  token.type === TYPES.PUCNTUATOR && '!.})]'.indexOf(token.value) < 0 ||
+  token.type === TYPES.PUCNTUATOR && !/^(--|\+\+|[!.})\]])$/.test(token.value) ||
   token.value === '!' &&
   (token !== iam.tl2 && isMaybeRegexp(iam.tl2, iam) ||
   token !== iam.tl3 && isMaybeRegexp(iam.tl3, iam))
@@ -1081,6 +1081,11 @@ export const jsx2tokens = (() => {
               break
             case '<'/* < <= << <<= */:
               ch1 = char(iam, 1)
+              // if (!iam.useJSX && (iam.ENV === '%ts%' || isMaybeTag(iam.tokenLast, iam))) {
+              //   env(iam, '%ts%')
+              //   createPunctuator(iam, 0)
+              //   // iam.deep++
+              // } else 
               if (
                 iam.useJSX && (
                   iam.ENV === '%jsxtag%' && ~env(iam, null) ||
@@ -1109,6 +1114,11 @@ export const jsx2tokens = (() => {
               break
             case '>'/* > >= >> >>= >>> >>>= */:
               switch (iam.ENV) {
+                // case '%ts%':
+                //   // iam.deep--
+                //   env(iam, null)
+                //   createPunctuator(iam, 0)
+                //   break
                 case '%<>%':
                   // deep--
                   env(iam, null)
