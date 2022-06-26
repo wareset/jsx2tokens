@@ -97,19 +97,15 @@ jsx2tokens
 export const jsx2tokens = (() => {
   const isChildlessTagName = (s: string): boolean => (CHILDLESS_TAGS as any)[s] === true
   
-  const isMaybeRegexp = (token: TypeToken | null): boolean =>
+  const isMaybeRegexp = (token: TypeToken | null, iam: TypeIam): boolean =>
     !token ||
   token.type === TYPES.KEYWORD ||
   token.type === TYPES.MODIFIER ||
   token.type === TYPES.JSX_EXPRESSION_START ||
-  token.type === TYPES.PUCNTUATOR && '!.})]'.indexOf(token.value) < 0
+  token.type === TYPES.PUCNTUATOR && '!.})]'.indexOf(token.value) < 0 ||
+  token.value === '!' && (token !== iam.tokenLast2 && isMaybeRegexp(iam.tokenLast2, iam))
 
-  const isMaybeTag = (token: TypeToken | null): boolean =>
-    !token ||
-  token.type === TYPES.KEYWORD ||
-  token.type === TYPES.MODIFIER ||
-  token.type === TYPES.JSX_EXPRESSION_START ||
-  token.type === TYPES.PUCNTUATOR && /[^!.})\]]$/.test(token.value)
+  const isMaybeTag = isMaybeRegexp
 
   const isTSGeneric = (s: string, idx: number): boolean => {
     for (let q = false, q2 = false, i = idx + 1; i < s.length; i++) {
@@ -140,6 +136,7 @@ export const jsx2tokens = (() => {
     readonly considerChildlessTags: boolean
     readonly tokens: TypeToken[]
     tokenLast: TypeToken | null
+    tokenLast2: TypeToken | null
     tagNameLast: string
     idx: number
     line: number
@@ -181,6 +178,7 @@ export const jsx2tokens = (() => {
   // ---------------------------------------------------------------------------
 
   const saveToken = (iam: TypeIam, _type: TypeTokenType): void => {
+    iam.tokenLast2 = iam.tokenLast
     iam.tokenLast = {
       deep : iam.deep,
       type : _type,
@@ -410,7 +408,7 @@ export const jsx2tokens = (() => {
           default:
         }
       }
-  
+
       const tokenLastTmp = iam.tokenLast
       saveToken(iam, TYPES.COMMENT_LINE)
       runCallback(iam)
@@ -827,10 +825,8 @@ export const jsx2tokens = (() => {
         }
       }
   
-      const tokenLastTmp = iam.tokenLast
       saveToken(iam, TYPES.JSX_COMMENT)
       runCallback(iam)
-      iam.tokenLast = tokenLastTmp
     }
   }
 
@@ -1083,7 +1079,7 @@ export const jsx2tokens = (() => {
                   iam.ENV === '%jsxtag%' && ~env(iam, null) ||
                 ch1 === '/' && iam.ENV[0] === '%script%' &&
                   (char(iam, 2) === '>' || iam.source.slice(iam.idx + 2, iam.idx + 2 + iam.ENV[1].length) === iam.ENV[1]) ||
-                isMaybeTag(iam.tokenLast) && !isTSGeneric(iam.source, iam.idx))
+                isMaybeTag(iam.tokenLast, iam) && !isTSGeneric(iam.source, iam.idx))
               ) {
                 if (!ch1.trim()) createPunctuator(iam, 0)
                 else if (ch1 === '!' && char(iam, 2) === '-' && char(iam, 3) === '-') {
@@ -1184,7 +1180,7 @@ export const jsx2tokens = (() => {
                     createPunctuator(iam, 1, iam.ENV[2] !== '/'
                       ? TYPES.JSX_TAG_OPENER_END_CHILDLESS
                       : TYPES.JSX_TAG_CLOSER_END)
-                  } else if (isMaybeRegexp(iam.tokenLast)) {
+                  } else if (isMaybeRegexp(iam.tokenLast, iam)) {
                     CASE_REGULAR_EXPRESSION(iam)
                   } else {
                     createPunctuator(iam, ch1 === '=' ? 1 : 0)
@@ -1249,6 +1245,7 @@ export const jsx2tokens = (() => {
       considerChildlessTags,
       tokens     : [],
       tokenLast  : null,
+      tokenLast2 : null,
       tagNameLast: '',
       idx        : -1,
       line       : 1,

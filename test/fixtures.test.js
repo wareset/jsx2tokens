@@ -8,7 +8,7 @@ const DIR_FIXTURES = path.resolve(__dirname, 'fixtures')
 const testFilesFromDir = (dir) => {
   fs.readdirSync(dir).forEach((file) => {
     const full = path.resolve(dir, file)
-    if (fs.statSync(full).isDirectory() && !/test/.test(file)) {
+    if (fs.statSync(full).isDirectory() && !/^src|test/.test(file)) {
       testFilesFromDir(full)
     } else if (/\.[jt]sx?$/.test(file)) {
       test(`FIXTURES (${dir}): ${file}`, () => {
