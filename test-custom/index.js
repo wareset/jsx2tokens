@@ -52,6 +52,7 @@ const compare = (code) => {
           case TOKEN_TYPES.TEMPLATE_TAIL:
             break
           case TOKEN_TYPES.KEYWORD:
+          case TOKEN_TYPES.IDENTIFIER:
             console.warn('VALUE')
             console.log('TS')
             console.log(tsToken)
@@ -80,7 +81,7 @@ const compare = (code) => {
 // console.log(typescriptTokenize(code))
 // console.log(jsx2tokensTokenize(code))
 
-let start = 250
+let start = 0
 let count = 0
 const start_ = start
 const testFilesFromDir = (dir) => {

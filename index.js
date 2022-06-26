@@ -160,16 +160,18 @@ E = (e, a) => {
             e.idx--;
             break e;
         }
-        d(e), E(e, O.IDENTIFIER);
+        d(e);
         var a = e.tokenLast;
-        switch (a.value) {
+        E(e, O.IDENTIFIER);
+        var s = e.tokenLast;
+        if (!a || !/^[.]$/.test(a.value)) switch (s.value) {
           case "null":
-            a.type = O.NULL;
+            s.type = O.NULL;
             break;
 
           case "true":
           case "false":
-            a.type = O.BOOLEAN;
+            s.type = O.BOOLEAN;
             break;
 
           case "let":
@@ -215,9 +217,9 @@ E = (e, a) => {
           case "while":
           case "with":
           case "yield":
-            a.type = O.KEYWORD;
+            s.type = O.KEYWORD;
         }
-        a.value.indexOf("@") > -1 && (a.type = O.MODIFIER), i(e);
+        s.value.indexOf("@") > -1 && (s.type = O.MODIFIER), i(e);
     }
 }, S = e => {
     if (l(e)) {
@@ -548,19 +550,19 @@ E = (e, a) => {
         }
         E(e, O.JSX_COMMENT), i(e);
     }
-}, (i, {loc: E = !1, range: d = !1, strict: C = !0, useJSX: A = !0, insideJSX: I = !1, skipStyleTags: X = !1, skipScriptTags: M = !1, parseScriptTags: m = !1, considerChildlessTags: h = !1, proxyCtx: v = {}, proxy: J} = {}) => {
+}, (i, {loc: E = !1, range: d = !1, strict: C = !0, useJSX: A = !0, insideJSX: I = !1, skipStyleTags: X = !1, skipScriptTags: M = !1, parseScriptTags: m = !1, considerChildlessTags: v = !1, proxyCtx: h = {}, proxy: J} = {}) => {
     var D = A && I ? "%><%" : "", P = {
         source: i,
         isBreakLoop: !1,
         proxy: J,
-        proxyCtx: v,
+        proxyCtx: h,
         loc: E,
         range: d,
         useJSX: A,
         skipStyleTags: X,
         skipScriptTags: M,
         parseScriptTags: m,
-        considerChildlessTags: h,
+        considerChildlessTags: v,
         tokens: [],
         tokenLast: null,
         tl2: null,

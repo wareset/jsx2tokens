@@ -317,7 +317,7 @@ export const jsx2tokens = (() => {
       }
 
       tagNameLast(iam)
-      // const tokenLastTmp = iam.tokenLast
+      const tokenLastTmp = iam.tokenLast
       saveToken(iam, TYPES.IDENTIFIER)
       const token = iam.tokenLast!
 
@@ -326,66 +326,65 @@ export const jsx2tokens = (() => {
       //   iam.tagNameLast = token.value
       // }
 
-      // if (!tokenLastTmp || !/^[.]$/.test(tokenLastTmp.value)) {
-      switch (token.value) {
-        case 'null':
-          token.type = TYPES.NULL
-          break
-        case 'true':
-        case 'false':
-          token.type = TYPES.BOOLEAN
-          break
-        case 'let':
-        case 'static':
-        case 'implements':
-        case 'interface':
-        case 'package':
-        case 'private':
-        case 'protected':
-        case 'public':
+      if (!tokenLastTmp || !/^[.]$/.test(tokenLastTmp.value)) {
+        switch (token.value) {
+          case 'null':
+            token.type = TYPES.NULL
+            break
+          case 'true':
+          case 'false':
+            token.type = TYPES.BOOLEAN
+            break
+          case 'let':
+          case 'static':
+          case 'implements':
+          case 'interface':
+          case 'package':
+          case 'private':
+          case 'protected':
+          case 'public':
         
-        // eslint-disable-next-line no-fallthrough
-        case 'await':
-        case 'break':
-        case 'case':
-        case 'catch':
-        case 'class':
-        case 'const':
-        case 'continue':
-        case 'debugger':
-        case 'default':
-        case 'delete':
-        case 'do':
-        case 'else':
-        case 'enum':
-        case 'export':
-        case 'extends':
-        case 'finally':
-        case 'for':
-        case 'function':
-        case 'if':
-        case 'import':
-        case 'in':
-        case 'instanceof':
-        case 'new':
-        case 'return':
-        case 'super':
-        case 'switch':
-        case 'this':
-        case 'throw':
-        case 'try':
-        case 'typeof':
-        case 'var':
-        case 'void':
-        case 'while':
-        case 'with':
-        case 'yield':
-          token.type = TYPES.KEYWORD
-          break
-        default:
-
+            // eslint-disable-next-line no-fallthrough
+          case 'await':
+          case 'break':
+          case 'case':
+          case 'catch':
+          case 'class':
+          case 'const':
+          case 'continue':
+          case 'debugger':
+          case 'default':
+          case 'delete':
+          case 'do':
+          case 'else':
+          case 'enum':
+          case 'export':
+          case 'extends':
+          case 'finally':
+          case 'for':
+          case 'function':
+          case 'if':
+          case 'import':
+          case 'in':
+          case 'instanceof':
+          case 'new':
+          case 'return':
+          case 'super':
+          case 'switch':
+          case 'this':
+          case 'throw':
+          case 'try':
+          case 'typeof':
+          case 'var':
+          case 'void':
+          case 'while':
+          case 'with':
+          case 'yield':
+            token.type = TYPES.KEYWORD
+            break
+          default:
+        }
       }
-      // }
 
       if (token.value.indexOf('@') > -1) {
         token.type = TYPES.MODIFIER
