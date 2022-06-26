@@ -3,7 +3,7 @@
 dester builds:
 index.ts
 */
-var e, a, s, c, r, t, i, n, E, k, l, d, o, S, u, p, b, _, T, f, N, x, L, R, O = {
+var e, a, s, c, r, t, i, n, E, k, l, d, o, S, p, u, b, _, T, f, N, x, L, R, O = {
     BOOLEAN: "Boolean",
     IDENTIFIER: "Identifier",
     KEYWORD: "Keyword",
@@ -156,18 +156,16 @@ E = (e, a) => {
             e.idx--;
             break e;
         }
-        d(e);
+        d(e), E(e, O.IDENTIFIER);
         var a = e.tokenLast;
-        E(e, O.IDENTIFIER);
-        var s = e.tokenLast;
-        if (!a || !/^[.]$/.test(a.value)) switch (s.value) {
+        switch (a.value) {
           case "null":
-            s.type = O.NULL;
+            a.type = O.NULL;
             break;
 
           case "true":
           case "false":
-            s.type = O.BOOLEAN;
+            a.type = O.BOOLEAN;
             break;
 
           case "let":
@@ -213,9 +211,9 @@ E = (e, a) => {
           case "while":
           case "with":
           case "yield":
-            s.type = O.KEYWORD;
+            a.type = O.KEYWORD;
         }
-        s.value.indexOf("@") > -1 && (s.type = O.MODIFIER), i(e);
+        a.value.indexOf("@") > -1 && (a.type = O.MODIFIER), i(e);
     }
 }, S = e => {
     if (k(e)) {
@@ -232,7 +230,7 @@ E = (e, a) => {
         var a = e.tokenLast;
         E(e, O.COMMENT_LINE), i(e), e.tokenLast = a;
     }
-}, u = e => {
+}, p = e => {
     if (k(e)) {
         e.idx++;
         e: for (;;) switch (e.idx++, r(e, 0)) {
@@ -259,7 +257,7 @@ E = (e, a) => {
         var a = e.tokenLast;
         E(e, O.COMMENT_BLOCK), i(e), e.tokenLast = a;
     }
-}, p = e => {
+}, u = e => {
     if (k(e)) {
         var a, s = 0;
         e: for (;;) switch (s && s--, e.idx++, a = r(e, 0)) {
@@ -546,19 +544,19 @@ E = (e, a) => {
         }
         E(e, O.JSX_COMMENT), i(e);
     }
-}, (i, {loc: E = !1, range: d = !1, strict: C = !0, useJSX: A = !0, insideJSX: I = !1, skipStyleTags: X = !1, skipScriptTags: M = !1, parseScriptTags: m = !1, considerChildlessTags: v = !1, proxyCtx: h = {}, proxy: J} = {}) => {
+}, (i, {loc: E = !1, range: d = !1, strict: C = !0, useJSX: A = !0, insideJSX: I = !1, skipStyleTags: X = !1, skipScriptTags: M = !1, parseScriptTags: m = !1, considerChildlessTags: h = !1, proxyCtx: v = {}, proxy: J} = {}) => {
     var D = A && I ? "%><%" : "", P = {
         source: i,
         isBreakLoop: !1,
         proxy: J,
-        proxyCtx: h,
+        proxyCtx: v,
         loc: E,
         range: d,
         useJSX: A,
         skipStyleTags: X,
         skipScriptTags: M,
         parseScriptTags: m,
-        considerChildlessTags: v,
+        considerChildlessTags: h,
         tokens: [],
         tokenLast: null,
         tokenLast2: null,
@@ -629,7 +627,7 @@ E = (e, a) => {
 
           case '"':
           case "'":
-            p(i);
+            u(i);
             break;
 
           case "`":
@@ -760,7 +758,7 @@ E = (e, a) => {
             break;
 
           case "?":
-            l(i, "." === (d = r(i, 1)) ? 1 : d !== E ? 0 : "=" !== r(i, 2) ? 1 : 2);
+            l(i, (d = r(i, 1)) !== E ? 0 : "=" !== r(i, 2) ? 1 : 2);
             break;
 
           case "*":
@@ -818,7 +816,7 @@ E = (e, a) => {
                 break;
 
               case "*":
-                u(i);
+                p(i);
                 break;
 
               default:
