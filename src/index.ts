@@ -103,7 +103,9 @@ export const jsx2tokens = (() => {
   token.type === TYPES.MODIFIER ||
   token.type === TYPES.JSX_EXPRESSION_START ||
   token.type === TYPES.PUCNTUATOR && '!.})]'.indexOf(token.value) < 0 ||
-  token.value === '!' && (token !== iam.tokenLast2 && isMaybeRegexp(iam.tokenLast2, iam))
+  token.value === '!' &&
+  (token !== iam.tl2 && isMaybeRegexp(iam.tl2, iam) ||
+  token !== iam.tl3 && isMaybeRegexp(iam.tl3, iam))
 
   const isMaybeTag = isMaybeRegexp
 
@@ -136,7 +138,8 @@ export const jsx2tokens = (() => {
     readonly considerChildlessTags: boolean
     readonly tokens: TypeToken[]
     tokenLast: TypeToken | null
-    tokenLast2: TypeToken | null
+    tl2: TypeToken | null
+    tl3: TypeToken | null
     tagNameLast: string
     idx: number
     line: number
@@ -178,7 +181,8 @@ export const jsx2tokens = (() => {
   // ---------------------------------------------------------------------------
 
   const saveToken = (iam: TypeIam, _type: TypeTokenType): void => {
-    iam.tokenLast2 = iam.tokenLast
+    iam.tl3 = iam.tl2
+    iam.tl2 = iam.tokenLast
     iam.tokenLast = {
       deep : iam.deep,
       type : _type,
@@ -1249,7 +1253,8 @@ export const jsx2tokens = (() => {
       considerChildlessTags,
       tokens     : [],
       tokenLast  : null,
-      tokenLast2 : null,
+      tl2        : null,
+      tl3        : null,
       tagNameLast: '',
       idx        : -1,
       line       : 1,

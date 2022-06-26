@@ -1,6 +1,6 @@
 {
   "name": "jsx2tokens",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Tokenizer for js, jsx, (ts, tsx)",
   "keywords": [
     "js",
@@ -52,6 +52,7 @@
     "@babel/plugin-transform-block-scoping": "^7.16.0",
     "@babel/plugin-transform-template-literals": "^7.16.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "@babel/parser": "^7.18.0",
     "dester": "0.x",
     "jest": "^27.4.0",
     "typescript": "4.x"
