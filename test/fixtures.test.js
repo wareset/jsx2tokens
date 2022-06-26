@@ -13,7 +13,7 @@ const testFilesFromDir = (dir) => {
     } else if (/\.[jt]sx?$/.test(file)) {
       test(`FIXTURES (${dir}): ${file}`, () => {
         const code = fs.readFileSync(full, 'utf8')
-        const tokens = jsx2tokens(code, { useJSX: /x$/.test(file) })
+        const tokens = jsx2tokens(code, { useJSX: !/\.ts$/.test(file) })
         expect(tokens[tokens.length - 1].deep).toEqual(0)
       })
     }

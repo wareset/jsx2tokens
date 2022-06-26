@@ -96,16 +96,17 @@ jsx2tokens
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const jsx2tokens = (() => {
   const isChildlessTagName = (s: string): boolean => (CHILDLESS_TAGS as any)[s] === true
-  
-  const isMaybeRegexp = (token: TypeToken | null, iam: TypeIam): boolean =>
+
+  const isMaybeRegexp = (
+    token: TypeToken | null, token2: TypeToken | null,
+    token3: TypeToken | null, token4: TypeToken | null
+  ): boolean =>
     !token ||
-  token.type === TYPES.KEYWORD ||
   token.type === TYPES.MODIFIER ||
   token.type === TYPES.JSX_EXPRESSION_START ||
-  token.type === TYPES.PUCNTUATOR && !/^(--|\+\+|[!.})\]])$/.test(token.value) ||
-  token.value === '!' &&
-  (token !== iam.tl2 && isMaybeRegexp(iam.tl2, iam) ||
-  token !== iam.tl3 && isMaybeRegexp(iam.tl3, iam))
+  token.type === TYPES.KEYWORD && (!token2 || token2.value !== '.') ||
+  token.value === '!' && isMaybeRegexp(token2, token3, token4, null) ||
+  token.type === TYPES.PUCNTUATOR && !/^(?:--|\+\+|[!.})\]])$/.test(token.value)
 
   const isMaybeTag = isMaybeRegexp
 
@@ -140,6 +141,7 @@ export const jsx2tokens = (() => {
     tokenLast: TypeToken | null
     tl2: TypeToken | null
     tl3: TypeToken | null
+    tl4: TypeToken | null
     tagNameLast: string
     idx: number
     line: number
@@ -181,6 +183,7 @@ export const jsx2tokens = (() => {
   // ---------------------------------------------------------------------------
 
   const saveToken = (iam: TypeIam, _type: TypeTokenType): void => {
+    iam.tl4 = iam.tl3
     iam.tl3 = iam.tl2
     iam.tl2 = iam.tokenLast
     iam.tokenLast = {
@@ -317,7 +320,7 @@ export const jsx2tokens = (() => {
       }
 
       tagNameLast(iam)
-      const tokenLastTmp = iam.tokenLast
+      // const tokenLastTmp = iam.tokenLast
       saveToken(iam, TYPES.IDENTIFIER)
       const token = iam.tokenLast!
 
@@ -326,7 +329,10 @@ export const jsx2tokens = (() => {
       //   iam.tagNameLast = token.value
       // }
 
-      if (!tokenLastTmp || !/^[.]$/.test(tokenLastTmp.value)) {
+      if (token.value.indexOf('@') > -1) {
+        token.type = TYPES.MODIFIER
+      } else {
+        // if (!tokenLastTmp || !/^[.]$/.test(tokenLastTmp.value)) {
         switch (token.value) {
           case 'null':
             token.type = TYPES.NULL
@@ -344,7 +350,7 @@ export const jsx2tokens = (() => {
           case 'protected':
           case 'public':
         
-            // eslint-disable-next-line no-fallthrough
+          // eslint-disable-next-line no-fallthrough
           case 'await':
           case 'break':
           case 'case':
@@ -384,11 +390,9 @@ export const jsx2tokens = (() => {
             break
           default:
         }
+        // }
       }
 
-      if (token.value.indexOf('@') > -1) {
-        token.type = TYPES.MODIFIER
-      }
       runCallback(iam)
     }
   }
@@ -1091,7 +1095,7 @@ export const jsx2tokens = (() => {
                   iam.ENV === '%jsxtag%' && ~env(iam, null) ||
                 ch1 === '/' && iam.ENV[0] === '%script%' &&
                   (char(iam, 2) === '>' || iam.source.slice(iam.idx + 2, iam.idx + 2 + iam.ENV[1].length) === iam.ENV[1]) ||
-                isMaybeTag(iam.tokenLast, iam) && !isTSGeneric(iam.source, iam.idx))
+                isMaybeTag(iam.tokenLast, iam.tl2, iam.tl3, iam.tl4) && !isTSGeneric(iam.source, iam.idx))
               ) {
                 if (!ch1.trim()) createPunctuator(iam, 0)
                 else if (ch1 === '!' && char(iam, 2) === '-' && char(iam, 3) === '-') {
@@ -1197,7 +1201,7 @@ export const jsx2tokens = (() => {
                     createPunctuator(iam, 1, iam.ENV[2] !== '/'
                       ? TYPES.JSX_TAG_OPENER_END_CHILDLESS
                       : TYPES.JSX_TAG_CLOSER_END)
-                  } else if (isMaybeRegexp(iam.tokenLast, iam)) {
+                  } else if (isMaybeRegexp(iam.tokenLast, iam.tl2, iam.tl3, iam.tl4)) {
                     CASE_REGULAR_EXPRESSION(iam)
                   } else {
                     createPunctuator(iam, ch1 === '=' ? 1 : 0)
@@ -1264,6 +1268,7 @@ export const jsx2tokens = (() => {
       tokenLast  : null,
       tl2        : null,
       tl3        : null,
+      tl4        : null,
       tagNameLast: '',
       idx        : -1,
       line       : 1,
