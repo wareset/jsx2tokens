@@ -123,15 +123,15 @@ const testFilesFromDir = (dir) => {
     }
   })
 }
-testFilesFromDir(DIR_FIXTURES)
+// testFilesFromDir(DIR_FIXTURES)
 
 // const code = fs.readFileSync(path.resolve(DIR_FIXTURES, 'mathjs/math.js'), 'utf8')
 
-// const code = `
-// let a = a.let
-// `
-// // compare(code)
-// console.log(esprima(code, {
-//   loc  : true,
-//   range: true
-// }))
+const code = `
+let a = a.return2 / 2;
+`
+// compare(code)
+console.log(esprima(code, {
+  loc  : true,
+  range: true
+}))
