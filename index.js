@@ -162,7 +162,7 @@ l = (e, a) => {
         }
         d(e), l(e, O.IDENTIFIER);
         var a = e.tokenLast;
-        if (a.value.indexOf("@") > -1) a.type = O.MODIFIER; else switch (a.value) {
+        switch (a.value) {
           case "null":
             a.type = O.NULL;
             break;
@@ -216,6 +216,10 @@ l = (e, a) => {
           case "with":
           case "yield":
             a.type = O.KEYWORD;
+            break;
+
+          default:
+            a.value.indexOf("@") > -1 && (a.type = O.MODIFIER);
         }
         i(e);
     }

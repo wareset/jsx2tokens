@@ -3,7 +3,7 @@
 dester builds:
 index.ts
 */
-var e, a, s, c, r, t, i, n, l, E, k, d, o, S, u, p, b, _, T, f, N, x, L, R, g = {
+var e, a, s, c, r, t, i, n, l, E, k, d, o, S, u, b, p, _, T, f, N, x, L, R, g = {
     BOOLEAN: "Boolean",
     IDENTIFIER: "Identifier",
     KEYWORD: "Keyword",
@@ -158,7 +158,7 @@ l = (e, a) => {
         }
         d(e), l(e, g.IDENTIFIER);
         var a = e.tokenLast;
-        if (a.value.indexOf("@") > -1) a.type = g.MODIFIER; else switch (a.value) {
+        switch (a.value) {
           case "null":
             a.type = g.NULL;
             break;
@@ -212,6 +212,10 @@ l = (e, a) => {
           case "with":
           case "yield":
             a.type = g.KEYWORD;
+            break;
+
+          default:
+            a.value.indexOf("@") > -1 && (a.type = g.MODIFIER);
         }
         i(e);
     }
@@ -257,7 +261,7 @@ l = (e, a) => {
         var a = e.tokenLast;
         l(e, g.COMMENT_BLOCK), i(e), e.tokenLast = a;
     }
-}, p = e => {
+}, b = e => {
     if (E(e)) {
         var a, s = 0;
         e: for (;;) switch (s && s--, e.idx++, a = r(e, 0)) {
@@ -275,7 +279,7 @@ l = (e, a) => {
         }
         l(e, g.STRING), i(e);
     }
-}, b = e => {
+}, p = e => {
     if (E(e)) {
         var a = 0, s = !1;
         e: for (;;) switch (a && a--, e.idx++, r(e, 0)) {
@@ -629,11 +633,11 @@ l = (e, a) => {
 
           case '"':
           case "'":
-            p(i);
+            b(i);
             break;
 
           case "`":
-            n(i, "%``%"), b(i);
+            n(i, "%``%"), p(i);
             break;
 
           case "0":
@@ -706,7 +710,7 @@ l = (e, a) => {
           case "}":
             switch (i.ENV) {
               case "%``%":
-                i.deep--, b(i);
+                i.deep--, p(i);
                 break;
 
               case "%{}%":
