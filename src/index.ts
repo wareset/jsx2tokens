@@ -1138,7 +1138,7 @@ export const jsx2tokens = (() => {
                       if (iam.skipScriptTags) {
                         const last = iam.source.indexOf('</script', iam.idx)
                         if (last < 0) ERROR(iam, 'script')
-                        CASE_JSX_TEXT(iam, last - 1)
+                        iam.idx++, CASE_JSX_TEXT(iam, last - 1)
                       }
                     }
                     break
@@ -1152,7 +1152,7 @@ export const jsx2tokens = (() => {
                     if (iam.skipStyleTags) {
                       const last = iam.source.indexOf('</style', iam.idx)
                       if (last < 0) ERROR(iam, 'style')
-                      CASE_JSX_TEXT(iam, last - 1)
+                      iam.idx++, CASE_JSX_TEXT(iam, last - 1)
                     }
                     break
                   }
