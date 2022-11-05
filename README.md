@@ -316,7 +316,7 @@ console.log(tokens)
   { deep: 0, type: 'JSXTagOpenerStart', value: '<' },
   { deep: 1, type: 'Identifier', value: 'style' },
   { deep: 0, type: 'JSXTagOpenerEnd', value: '>' },
-  { deep: 1, type: 'JSXText', value: '>body { color: red }' },
+  { deep: 1, type: 'JSXText', value: 'body { color: red }' },
   { deep: 0, type: 'JSXTagCloserStart', value: '</' },
   { deep: 1, type: 'Identifier', value: 'style' },
   { deep: 0, type: 'JSXTagCloserEnd', value: '>' }
