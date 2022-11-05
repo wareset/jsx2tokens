@@ -793,14 +793,14 @@ l = (e, a) => {
                 if (n(i, null), "script" === i.tagNameLast) {
                     if (i.deep--, k(i, 0, O.JSX_TAG_OPENER_END), i.deep++, i.parseScriptTags) n(i, [ "%script%", i.tagNameLast ]); else if (n(i, "%><%"), 
                     i.skipScriptTags) {
-                        var I = i.source.indexOf("</script", i.idx);
+                        var I = i.source.indexOf("<\/script>", i.idx);
                         I < 0 && c(i, "script"), i.idx++, L(i, I - 1);
                     }
                     break;
                 }
                 if ("style" === i.tagNameLast) {
                     if (i.deep--, k(i, 0, O.JSX_TAG_OPENER_END), i.deep++, n(i, "%><%"), i.skipStyleTags) {
-                        var X = i.source.indexOf("</style", i.idx);
+                        var X = i.source.indexOf("</style>", i.idx);
                         X < 0 && c(i, "style"), i.idx++, L(i, X - 1);
                     }
                     break;

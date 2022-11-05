@@ -1136,7 +1136,7 @@ export const jsx2tokens = (() => {
                     } else {
                       env(iam, '%><%')
                       if (iam.skipScriptTags) {
-                        const last = iam.source.indexOf('</script', iam.idx)
+                        const last = iam.source.indexOf('</script>', iam.idx)
                         if (last < 0) ERROR(iam, 'script')
                         iam.idx++, CASE_JSX_TEXT(iam, last - 1)
                       }
@@ -1150,7 +1150,7 @@ export const jsx2tokens = (() => {
                     iam.deep++
                     env(iam, '%><%')
                     if (iam.skipStyleTags) {
-                      const last = iam.source.indexOf('</style', iam.idx)
+                      const last = iam.source.indexOf('</style>', iam.idx)
                       if (last < 0) ERROR(iam, 'style')
                       iam.idx++, CASE_JSX_TEXT(iam, last - 1)
                     }
