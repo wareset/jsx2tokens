@@ -94,23 +94,26 @@ jsx2tokens
 --------------------------------------------------------------------------------
 */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const jsx2tokens = (() => {
-  const isChildlessTagName = (s: string): boolean => (CHILDLESS_TAGS as any)[s] === true
+export const jsx2tokens = (function() {
+  function isChildlessTagName(s: string): boolean {
+    return (CHILDLESS_TAGS as any)[s] === true
+  }
 
-  const isMaybeRegexp = (
+  function isMaybeRegexp(
     token: TypeToken | null, token2: TypeToken | null,
     token3: TypeToken | null, token4: TypeToken | null
-  ): boolean =>
-    !token ||
+  ): boolean {
+    return !token ||
   token.type === TYPES.MODIFIER ||
   token.type === TYPES.JSX_EXPRESSION_START ||
   token.type === TYPES.KEYWORD && (!token2 || token2.value !== '.') ||
   token.value === '!' && isMaybeRegexp(token2, token3, token4, null) ||
   token.type === TYPES.PUCNTUATOR && !/^(?:--|\+\+|[!.})\]])$/.test(token.value)
+  }
 
   const isMaybeTag = isMaybeRegexp
 
-  const isTSGeneric = (s: string, idx: number): boolean => {
+  function isTSGeneric(s: string, idx: number): boolean {
     for (let q = false, q2 = false, i = idx + 1; i < s.length; i++) {
       if (q2 || (q2 = !/\s/.test(s[i]))) {
         if (s[i] === ',' || s[i] === '=') return true
@@ -154,17 +157,19 @@ export const jsx2tokens = (() => {
     readonly __env__: (string | string[])[]
   }
 
-  const ERROR = (iam: TypeIam, ...a: any): never => {
+  function ERROR(iam: TypeIam, ...a: any): never {
     throw new Error('jsx2tokens - ' + a.join(' ') + ': ' +
     JSON.stringify({ value: iam.source.slice(iam.rangeStart, iam.idx + 1), line: iam.lineStart, column: iam.columnStart, range: iam.rangeStart }))
   }
 
-  const char = (iam: TypeIam, offset: number): string => iam.source.charAt(iam.idx + offset)
-  const plusLine = (iam: TypeIam, force: boolean): void => {
+  function char(iam: TypeIam, offset: number): string {
+    return iam.source.charAt(iam.idx + offset)
+  }
+  function plusLine(iam: TypeIam, force: boolean): void {
     if (force || char(iam, 1) !== '\u000A') iam.line++, iam.columnDiff = iam.idx + 1
   }
 
-  const runCallback = (iam: TypeIam): void => {
+  function runCallback(iam: TypeIam): void {
     if (iam.proxy) {
       iam.isBreakLoop = !!iam.proxy(iam.tokenLast!, iam.tokens.length - 1, iam.tokens, iam.proxyCtx)
     }
@@ -174,7 +179,7 @@ export const jsx2tokens = (() => {
 
   // let ENV: string | string[]
   // let __env__: (string | string[])[]
-  const env = (iam: TypeIam, _type?: string | string[] | null): string | string[] => {
+  function env(iam: TypeIam, _type?: string | string[] | null): string | string[] {
     if (_type === null) iam.__env__.pop()
     else _type && iam.__env__.push(_type)
     return iam.ENV = iam.__env__[iam.__env__.length - 1] || ''
@@ -182,7 +187,7 @@ export const jsx2tokens = (() => {
 
   // ---------------------------------------------------------------------------
 
-  const saveToken = (iam: TypeIam, _type: TypeTokenType): void => {
+  function saveToken(iam: TypeIam, _type: TypeTokenType): void {
     iam.tl4 = iam.tl3
     iam.tl3 = iam.tl2
     iam.tl2 = iam.tokenLast
@@ -209,7 +214,7 @@ export const jsx2tokens = (() => {
     iam.tokens.push(iam.tokenLast)
   }
 
-  const initToken = (iam: TypeIam): boolean => {
+  function initToken(iam: TypeIam): boolean {
     if (iam.rangeStart < iam.idx) {
       iam.idx--
       const tokenLastTmp = iam.tokenLast
@@ -227,7 +232,7 @@ export const jsx2tokens = (() => {
     return !iam.isBreakLoop
   }
 
-  const createPunctuator = (iam: TypeIam, offset: number, type: TypeTokenType = TYPES.PUCNTUATOR): void => {
+  function createPunctuator(iam: TypeIam, offset: number, type: TypeTokenType = TYPES.PUCNTUATOR): void {
     if (initToken(iam)) {
     // const tokenLastTmp = tokenLast
       if (offset) iam.idx += offset
@@ -241,7 +246,7 @@ export const jsx2tokens = (() => {
     }
   }
 
-  const tagNameLast = (iam: TypeIam): void => {
+  function tagNameLast(iam: TypeIam): void {
     if (iam.tokenLast && iam.tokenLast.type === TYPES.JSX_TAG_OPENER_START) {
       iam.tagNameLast = iam.source.slice(iam.rangeStart, iam.idx + 1)
     }
@@ -249,7 +254,7 @@ export const jsx2tokens = (() => {
 
   // ---------------------------------------------------------------------------
 
-  const CASE_IDENTIFIER = (iam: TypeIam): void => {
+  function CASE_IDENTIFIER(iam: TypeIam): void {
     if (initToken(iam)) {
     // let ch0 = ''
   
@@ -397,7 +402,7 @@ export const jsx2tokens = (() => {
     }
   }
 
-  const CASE_COMMENT_LINE = (iam: TypeIam): void => {
+  function CASE_COMMENT_LINE(iam: TypeIam): void {
     if (initToken(iam)) {
     // let ch0: string
   
@@ -423,7 +428,7 @@ export const jsx2tokens = (() => {
     }
   }
   
-  const CASE_COMMENT_BLOCK = (iam: TypeIam): void => {
+  function CASE_COMMENT_BLOCK(iam: TypeIam): void {
     if (initToken(iam)) {
     // let ch0: string
   
@@ -459,7 +464,7 @@ export const jsx2tokens = (() => {
     }
   }
   
-  const CASE_STRING = (iam: TypeIam): void => {
+  function CASE_STRING(iam: TypeIam): void {
     if (initToken(iam)) {
       let ch0: string
       let slashed = 0
@@ -490,7 +495,7 @@ export const jsx2tokens = (() => {
     }
   }
   
-  const CASE_TEMPLATE = (iam: TypeIam): void => {
+  function CASE_TEMPLATE(iam: TypeIam): void {
     if (initToken(iam)) {
     // let ch0: string
       let slashed = 0
@@ -545,7 +550,7 @@ export const jsx2tokens = (() => {
     }
   }
   
-  const CASE_REGULAR_EXPRESSION = (iam: TypeIam): void => {
+  function CASE_REGULAR_EXPRESSION(iam: TypeIam): void {
     if (initToken(iam)) {
       let rxD = 0
       // let ch0: string
@@ -590,7 +595,7 @@ export const jsx2tokens = (() => {
     }
   }
 
-  const CASE_NUMERIC = (iam: TypeIam, nD: number, nE: number, nS: number): void => {
+  function CASE_NUMERIC(iam: TypeIam, nD: number, nE: number, nS: number): void {
     if (initToken(iam)) {
       let ch0: string
   
@@ -650,7 +655,7 @@ export const jsx2tokens = (() => {
     }
   }
   
-  const CASE_NUMERIC_B = (iam: TypeIam): void => {
+  function CASE_NUMERIC_B(iam: TypeIam): void {
     if (initToken(iam)) {
       let nS = 1
       let ch0: string
@@ -678,7 +683,7 @@ export const jsx2tokens = (() => {
     }
   }
   
-  const CASE_NUMERIC_O = (iam: TypeIam): void => {
+  function CASE_NUMERIC_O(iam: TypeIam): void {
     if (initToken(iam)) {
       let nS = 1
       let ch0: string
@@ -712,7 +717,7 @@ export const jsx2tokens = (() => {
     }
   }
   
-  const CASE_NUMERIC_X = (iam: TypeIam): void => {
+  function CASE_NUMERIC_X(iam: TypeIam): void {
     if (initToken(iam)) {
       let nS = 1
       let ch0: string
@@ -760,7 +765,7 @@ export const jsx2tokens = (() => {
     }
   }
   
-  const CASE_JSX_TEXT = (iam: TypeIam, forIdx?: number): void => {
+  function CASE_JSX_TEXT(iam: TypeIam, forIdx?: number): void {
     if (initToken(iam)) {
     // let ch0: string
       let slashed = 0
@@ -804,7 +809,7 @@ export const jsx2tokens = (() => {
     }
   }
   
-  const CASE_JSX_COMMENT = (iam: TypeIam): void => {
+  function CASE_JSX_COMMENT(iam: TypeIam): void {
     if (initToken(iam)) {
     // let ch0: string
    
@@ -837,7 +842,7 @@ export const jsx2tokens = (() => {
     }
   }
 
-  const DEFAULT_LOOP = (iam: TypeIam): void => {
+  function DEFAULT_LOOP(iam: TypeIam): void {
     let ch0: string
     let ch1: string
     let ch2: string
@@ -1222,7 +1227,7 @@ export const jsx2tokens = (() => {
   // ---------------------------------------------------------------------------
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  return <C extends readonly [] | {} = {}>(
+  return function<C extends readonly [] | {} = {}>(
     _source: string,
     // eslint-disable-next-line default-param-last
     {
@@ -1249,7 +1254,7 @@ export const jsx2tokens = (() => {
       /** Default: undefined. Middleware like */
       proxy = void 0 as (((v: TypeToken, k: number, a: TypeToken[], proxyCtx: C) => boolean | void) | undefined)
     } = {}
-  ) => {
+  ) {
     const ENV = useJSX && insideJSX ? '%><%' : ''
     const iam: TypeIam = {
       source     : _source,
