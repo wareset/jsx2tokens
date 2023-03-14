@@ -1287,7 +1287,7 @@ export const jsx2tokens = (function() {
     }
 
     DEFAULT_LOOP(iam)
-    strict && iam.deep && ERROR(iam, 'deep')
+    iam.isBreakLoop || strict && iam.deep && ERROR(iam, 'deep')
     return iam.tokens
   }
 })()
