@@ -157,7 +157,7 @@ export const jsx2tokens = (function() {
     readonly __env__: (string | string[])[]
   }
 
-  function ERROR(iam: TypeIam, ...a: any): never {
+  function _ERROR_(iam: TypeIam, ...a: any): never {
     throw new Error('jsx2tokens - ' + a.join(' ') + ': ' +
     JSON.stringify({ value: iam.source.slice(iam.rangeStart, iam.idx + 1), line: iam.lineStart, column: iam.columnStart, range: iam.rangeStart }))
   }
@@ -254,7 +254,7 @@ export const jsx2tokens = (function() {
 
   // ---------------------------------------------------------------------------
 
-  function CASE_IDENTIFIER(iam: TypeIam): void {
+  function _CASE_IDENTIFIER_(iam: TypeIam): void {
     if (initToken(iam)) {
     // let ch0 = ''
   
@@ -402,7 +402,7 @@ export const jsx2tokens = (function() {
     }
   }
 
-  function CASE_COMMENT_LINE(iam: TypeIam): void {
+  function _CASE_COMMENT_LINE_(iam: TypeIam): void {
     if (initToken(iam)) {
     // let ch0: string
   
@@ -428,7 +428,7 @@ export const jsx2tokens = (function() {
     }
   }
   
-  function CASE_COMMENT_BLOCK(iam: TypeIam): void {
+  function _CASE_COMMENT_BLOCK_(iam: TypeIam): void {
     if (initToken(iam)) {
     // let ch0: string
   
@@ -437,7 +437,7 @@ export const jsx2tokens = (function() {
         iam.idx++
         switch (char(iam, 0)) {
           case '':
-            ERROR(iam, TYPES.COMMENT_BLOCK)
+            _ERROR_(iam, TYPES.COMMENT_BLOCK)
             break
           case '\u000D'/* \r */:
             plusLine(iam, false)
@@ -464,7 +464,7 @@ export const jsx2tokens = (function() {
     }
   }
   
-  function CASE_STRING(iam: TypeIam): void {
+  function _CASE_STRING_(iam: TypeIam): void {
     if (initToken(iam)) {
       let ch0: string
       let slashed = 0
@@ -478,7 +478,7 @@ export const jsx2tokens = (function() {
           // case '\u000A' /* \n */:
           // case '\u2028':
           // case '\u2029':
-            ERROR(iam, TYPES.STRING)
+            _ERROR_(iam, TYPES.STRING)
             break
           case '\\':
             if (!slashed) slashed = 2
@@ -495,7 +495,7 @@ export const jsx2tokens = (function() {
     }
   }
   
-  function CASE_TEMPLATE(iam: TypeIam): void {
+  function _CASE_TEMPLATE_(iam: TypeIam): void {
     if (initToken(iam)) {
     // let ch0: string
       let slashed = 0
@@ -506,7 +506,7 @@ export const jsx2tokens = (function() {
         iam.idx++
         switch (char(iam, 0)) {
           case '':
-            ERROR(iam, TYPES.TEMPLATE)
+            _ERROR_(iam, TYPES.TEMPLATE)
             break
           case '\u000D'/* \r */:
             plusLine(iam, false)
@@ -550,7 +550,7 @@ export const jsx2tokens = (function() {
     }
   }
   
-  function CASE_REGULAR_EXPRESSION(iam: TypeIam): void {
+  function _CASE_REGULAR_EXPRESSION_(iam: TypeIam): void {
     if (initToken(iam)) {
       let rxD = 0
       // let ch0: string
@@ -565,7 +565,7 @@ export const jsx2tokens = (function() {
           case '\u000A'/* \n */:
           case '\u2028':
           case '\u2029':
-            ERROR(iam, TYPES.REGULAR_EXPRESSION)
+            _ERROR_(iam, TYPES.REGULAR_EXPRESSION)
             break
           case '\\':
             if (!slashed) slashed = 2
@@ -595,7 +595,7 @@ export const jsx2tokens = (function() {
     }
   }
 
-  function CASE_NUMERIC(iam: TypeIam, nD: number, nE: number, nS: number): void {
+  function _CASE_NUMERIC_(iam: TypeIam, nD: number, nE: number, nS: number): void {
     if (initToken(iam)) {
       let ch0: string
   
@@ -604,11 +604,11 @@ export const jsx2tokens = (function() {
         iam.idx++
         switch (ch0 = char(iam, 0)) {
           case '_':
-            if (nS) ERROR(iam, TYPES.NUMERIC)
+            if (nS) _ERROR_(iam, TYPES.NUMERIC)
             nS = 1
             break
           case '.':
-            if (nD !== 1 && nS) ERROR(iam, TYPES.NUMERIC)
+            if (nD !== 1 && nS) _ERROR_(iam, TYPES.NUMERIC)
             if (nD || nE) {
               iam.idx--
               break LOOP
@@ -618,7 +618,7 @@ export const jsx2tokens = (function() {
             break
           case 'e':
           case 'E':
-            if (nE || nS) ERROR(iam, TYPES.NUMERIC)
+            if (nE || nS) _ERROR_(iam, TYPES.NUMERIC)
             nE = 1
             nS = 1
             break
@@ -646,7 +646,7 @@ export const jsx2tokens = (function() {
             break
           default:
             if (ch0 !== 'n') iam.idx--
-            if (nS) ERROR(iam, TYPES.NUMERIC)
+            if (nS) _ERROR_(iam, TYPES.NUMERIC)
             break LOOP
         }
       }
@@ -655,7 +655,7 @@ export const jsx2tokens = (function() {
     }
   }
   
-  function CASE_NUMERIC_B(iam: TypeIam): void {
+  function _CASE_NUMERIC__B(iam: TypeIam): void {
     if (initToken(iam)) {
       let nS = 1
       let ch0: string
@@ -665,7 +665,7 @@ export const jsx2tokens = (function() {
         iam.idx++
         switch (ch0 = char(iam, 0)) {
           case '_':
-            if (nS) ERROR(iam, TYPES.NUMERIC)
+            if (nS) _ERROR_(iam, TYPES.NUMERIC)
             nS = 1
             break
           case '0':
@@ -674,7 +674,7 @@ export const jsx2tokens = (function() {
             break
           default:
             if (ch0 !== 'n') iam.idx--
-            else if (nS) ERROR(iam, TYPES.NUMERIC)
+            else if (nS) _ERROR_(iam, TYPES.NUMERIC)
             break LOOP
         }
       }
@@ -683,7 +683,7 @@ export const jsx2tokens = (function() {
     }
   }
   
-  function CASE_NUMERIC_O(iam: TypeIam): void {
+  function _CASE_NUMERIC__O(iam: TypeIam): void {
     if (initToken(iam)) {
       let nS = 1
       let ch0: string
@@ -693,7 +693,7 @@ export const jsx2tokens = (function() {
         iam.idx++
         switch (ch0 = char(iam, 0)) {
           case '_':
-            if (nS) ERROR(iam, TYPES.NUMERIC)
+            if (nS) _ERROR_(iam, TYPES.NUMERIC)
             nS = 1
             break
           case '0':
@@ -708,7 +708,7 @@ export const jsx2tokens = (function() {
             break
           default:
             if (ch0 !== 'n') iam.idx--
-            else if (nS) ERROR(iam, TYPES.NUMERIC)
+            else if (nS) _ERROR_(iam, TYPES.NUMERIC)
             break LOOP
         }
       }
@@ -717,7 +717,7 @@ export const jsx2tokens = (function() {
     }
   }
   
-  function CASE_NUMERIC_X(iam: TypeIam): void {
+  function _CASE_NUMERIC__X(iam: TypeIam): void {
     if (initToken(iam)) {
       let nS = 1
       let ch0: string
@@ -727,7 +727,7 @@ export const jsx2tokens = (function() {
         iam.idx++
         switch (ch0 = char(iam, 0)) {
           case '_':
-            if (nS) ERROR(iam, TYPES.NUMERIC)
+            if (nS) _ERROR_(iam, TYPES.NUMERIC)
             nS = 1
             break
           case '0':
@@ -756,7 +756,7 @@ export const jsx2tokens = (function() {
             break
           default:
             if (ch0 !== 'n') iam.idx--
-            else if (nS) ERROR(iam, TYPES.NUMERIC)
+            else if (nS) _ERROR_(iam, TYPES.NUMERIC)
             break LOOP
         }
       }
@@ -765,7 +765,7 @@ export const jsx2tokens = (function() {
     }
   }
   
-  function CASE_JSX_TEXT(iam: TypeIam, forIdx?: number): void {
+  function _CASE_JSX_TEXT_(iam: TypeIam, forIdx?: number): void {
     if (initToken(iam)) {
     // let ch0: string
       let slashed = 0
@@ -809,7 +809,7 @@ export const jsx2tokens = (function() {
     }
   }
   
-  function CASE_JSX_COMMENT(iam: TypeIam): void {
+  function _CASE_JSX_COMMENT_(iam: TypeIam): void {
     if (initToken(iam)) {
     // let ch0: string
    
@@ -842,7 +842,7 @@ export const jsx2tokens = (function() {
     }
   }
 
-  function DEFAULT_LOOP(iam: TypeIam): void {
+  function _DEFAULT_LOOP_(iam: TypeIam): void {
     let ch0: string
     let ch1: string
     let ch2: string
@@ -863,10 +863,10 @@ export const jsx2tokens = (function() {
               break
             case '<':
               if (char(iam, 1).trim()) iam.idx--, env(iam, '%jsxtag%')
-              else CASE_JSX_TEXT(iam)
+              else _CASE_JSX_TEXT_(iam)
               break
             default:
-              CASE_JSX_TEXT(iam)
+              _CASE_JSX_TEXT_(iam)
               
           }
           break
@@ -919,14 +919,14 @@ export const jsx2tokens = (function() {
             // https://tc39.es/ecma262/#sec-literals-string-literals
             case '"':
             case "'":
-              CASE_STRING(iam)
+              _CASE_STRING_(iam)
               break
   
             // Template Literal Lexical Components
             // https://tc39.es/ecma262/#sec-template-literal-lexical-components
             case '`':
               env(iam, '%``%')
-              CASE_TEMPLATE(iam)
+              _CASE_TEMPLATE_(iam)
               break
   
             // Numeric Literals
@@ -935,25 +935,25 @@ export const jsx2tokens = (function() {
               switch (char(iam, 1)) {
                 case 'b':
                 case 'B':
-                  CASE_NUMERIC_B(iam)
+                  _CASE_NUMERIC__B(iam)
                   break
                 case 'o':
                 case 'O':
-                  CASE_NUMERIC_O(iam)
+                  _CASE_NUMERIC__O(iam)
                   break
                 case 'x':
                 case 'X':
-                  CASE_NUMERIC_X(iam)
+                  _CASE_NUMERIC__X(iam)
                   break
                 case '.':
-                  CASE_NUMERIC(iam, 1, 0, 1)
+                  _CASE_NUMERIC_(iam, 1, 0, 1)
                   break
                 case 'e':
                 case 'E':
-                  CASE_NUMERIC(iam, 0, 1, 1)
+                  _CASE_NUMERIC_(iam, 0, 1, 1)
                   break
                 default:
-                  CASE_NUMERIC(iam, 0, 0, 0)
+                  _CASE_NUMERIC_(iam, 0, 0, 0)
               }
               break
   
@@ -966,7 +966,7 @@ export const jsx2tokens = (function() {
             case '7':
             case '8':
             case '9':
-              CASE_NUMERIC(iam, 0, 0, 0)
+              _CASE_NUMERIC_(iam, 0, 0, 0)
               break
   
             // Punctuators
@@ -983,7 +983,7 @@ export const jsx2tokens = (function() {
                 case '7':
                 case '8':
                 case '9':
-                  CASE_NUMERIC(iam, 1, 0, 0)
+                  _CASE_NUMERIC_(iam, 1, 0, 0)
                   break
                 default:
                   createPunctuator(iam, ch1 === ch0 && char(iam, 2) === ch0 ? 2 : 0)
@@ -999,7 +999,7 @@ export const jsx2tokens = (function() {
               switch (iam.ENV) {
                 case '%``%':
                   iam.deep--
-                  CASE_TEMPLATE(iam)
+                  _CASE_TEMPLATE_(iam)
                   break
                 case '%{}%':
                   iam.deep--
@@ -1012,7 +1012,7 @@ export const jsx2tokens = (function() {
                   createPunctuator(iam, 0, TYPES.JSX_EXPRESSION_END)
                   break
                 default:
-                  ERROR(iam, 'Bracket "}"')
+                  _ERROR_(iam, 'Bracket "}"')
               }
               break
   
@@ -1029,7 +1029,7 @@ export const jsx2tokens = (function() {
                   createPunctuator(iam, 0)
                   break
                 default:
-                  ERROR(iam, 'Bracket ")"')
+                  _ERROR_(iam, 'Bracket ")"')
               }
               break
   
@@ -1046,7 +1046,7 @@ export const jsx2tokens = (function() {
                   createPunctuator(iam, 0)
                   break
                 default:
-                  ERROR(iam, 'Bracket "]"')
+                  _ERROR_(iam, 'Bracket "]"')
               }
               break
   
@@ -1104,7 +1104,7 @@ export const jsx2tokens = (function() {
               ) {
                 if (!ch1.trim()) createPunctuator(iam, 0)
                 else if (ch1 === '!' && char(iam, 2) === '-' && char(iam, 3) === '-') {
-                  CASE_JSX_COMMENT(iam)
+                  _CASE_JSX_COMMENT_(iam)
                 } else if (ch1 === '/' && !/[/*]/.test(char(iam, 2))) {
                   if (iam.ENV === '%><%' || iam.ENV[0] === '%script%') env(iam, null), iam.deep--
                   createPunctuator(iam, 1, TYPES.JSX_TAG_CLOSER_START)
@@ -1142,8 +1142,8 @@ export const jsx2tokens = (function() {
                       env(iam, '%><%')
                       if (iam.skipScriptTags) {
                         const last = iam.source.indexOf('</script>', iam.idx)
-                        if (last < 0) ERROR(iam, 'script')
-                        iam.idx++, CASE_JSX_TEXT(iam, last - 1)
+                        if (last < 0) _ERROR_(iam, 'script')
+                        iam.idx++, _CASE_JSX_TEXT_(iam, last - 1)
                       }
                     }
                     break
@@ -1156,8 +1156,8 @@ export const jsx2tokens = (function() {
                     env(iam, '%><%')
                     if (iam.skipStyleTags) {
                       const last = iam.source.indexOf('</style>', iam.idx)
-                      if (last < 0) ERROR(iam, 'style')
-                      iam.idx++, CASE_JSX_TEXT(iam, last - 1)
+                      if (last < 0) _ERROR_(iam, 'style')
+                      iam.idx++, _CASE_JSX_TEXT_(iam, last - 1)
                     }
                     break
                   }
@@ -1193,11 +1193,11 @@ export const jsx2tokens = (function() {
                 // https://tc39.es/ecma262/#sec-comments
                 // https://tc39.es/ecma262/#prod-SingleLineComment
                 case '/'/* // */:
-                  CASE_COMMENT_LINE(iam)
+                  _CASE_COMMENT_LINE_(iam)
                   break
                 // https://tc39.es/ecma262/#prod-MultiLineComment
                 case '*'/* /* */:
-                  CASE_COMMENT_BLOCK(iam)
+                  _CASE_COMMENT_BLOCK_(iam)
                   break
                 default:
                   if (iam.ENV[1] === '<' && ch1 === '>') {
@@ -1207,14 +1207,14 @@ export const jsx2tokens = (function() {
                       ? TYPES.JSX_TAG_OPENER_END_CHILDLESS
                       : TYPES.JSX_TAG_CLOSER_END)
                   } else if (isMaybeRegexp(iam.tokenLast, iam.tl2, iam.tl3, iam.tl4)) {
-                    CASE_REGULAR_EXPRESSION(iam)
+                    _CASE_REGULAR_EXPRESSION_(iam)
                   } else {
                     createPunctuator(iam, ch1 === '=' ? 1 : 0)
                   }
               }
               break
             default:
-              CASE_IDENTIFIER(iam)
+              _CASE_IDENTIFIER_(iam)
           }
   
           break
@@ -1286,8 +1286,8 @@ export const jsx2tokens = (function() {
       __env__    : [ENV]
     }
 
-    DEFAULT_LOOP(iam)
-    iam.isBreakLoop || strict && iam.deep && ERROR(iam, 'deep')
+    _DEFAULT_LOOP_(iam)
+    iam.isBreakLoop || strict && iam.deep && _ERROR_(iam, 'deep')
     return iam.tokens
   }
 })()
